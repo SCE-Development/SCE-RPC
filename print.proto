@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+
+service Printer {
+    rpc printMe (printRequest) returns (printResponse);
+}
+
+message printRequest{
+    uint32 pages = 1;
+    string d = 2;
+    map<string, string> options = 3;
+}
+
+message printResponse{
+    string message = 1;
+}
