@@ -11,6 +11,24 @@ Since Google Cloud printing is
 we are developing a new method of printing. Using the LPD protocol, we no 
 longer need to rely on other services to host our printing page.
 
+
+## Overview
+We use the client-server model where the client is written in node
+and the server is written in python. To modify the file to print, 
+change the following line in `printingServer.py`
+```python
+FILE_PATH = '../JerryLeeResume.pdf'
+```
+To modify the printing options, change the following line in `printClient.js`
+```js
+client.PrintPage({
+        copies: 1, destination: "HP-LaserJet-p2015dn", options: {
+            "sides": "one-sided",
+            "page-ranges": "NA"
+        }
+    }
+```
+
 ### Client
 The printer RPC is called from `printClient.js`. An example of the function 
 is invoked below:
@@ -38,7 +56,8 @@ We then invoke the `PrintPage` RPC from the `.js` file, sending a
 
 
 ### Server
-Our server side `PrintServicer` is written in Python. 
+Our server side `PrintServicer` is written in Python 
+in the file `printingServer.py`. 
 
 #### PrintServicer Object
 ```python
@@ -54,9 +73,8 @@ There is a `PrintServicer` object that has the
 server functions derived from the automatically generated
 `print_pb2_grpc` files from the proto. 
 We generate a response, which represents the status of 
-the printing. 
-`PrintMe` is then called, which executes the printing procedure
-and returns a status.
+the printer. `PrintMe` is then called, which executes 
+the printing procedure and returns a status.
 The resulting status is sent back to the client.
 
 #### Connecting to Server
@@ -137,13 +155,14 @@ In our code, we have a dictionary of options to choose from, like `sides` and `p
 and if you are a recuiter, please download and read it.
 This was used as test pdf to print.
 
-To understand more about LPD, type in `man lp` in terminal.
+To understand more about LPD, type in `man lp` in terminal or visit
+the [LP Manual Page](https://www.cups.org/doc/man-lp.html).
 
 ## Difficulties Encountered
 
 ### Using IPP Protocol
-Initially, we tried using the IPP protocol to print. 
-However, the printer was too old so it was unable to 
+Initially, we tried using the IPP (Internet Printing Protocol) protocol to 
+print. However, the printer was too old so it was unable to 
 use the protocol. When we tried printing a file using IPP, the 
 unformatted raw pdf of the file was printed.
 
