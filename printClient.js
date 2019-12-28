@@ -15,13 +15,14 @@ var hello_proto = grpc.loadPackageDefinition(packageDefinition);
 function main() {
     var client = new hello_proto.Printer('localhost:50051',
         grpc.credentials.createInsecure());
-    client.printMe({
-        pages: 1, d: "HP-LaserJet-p2015dn", options: {
+    client.PrintPage({
+        copies: 1, destination: "HP-LaserJet-p2015dn", options: {
             "sides": "one-sided",
             "page-ranges": "NA"
         }
     }, function (err, response) {
-        console.log('Greeting:', response);
+        if (err) console.log(err);
+        console.log('Message:', response.message);
     });
 }
 
