@@ -20,7 +20,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   package='',
   syntax='proto3',
   serialized_options=None,
-  serialized_pb=_b('\n\x0bprint.proto\"\x85\x01\n\x0cPrintRequest\x12\r\n\x05pages\x18\x01 \x01(\r\x12\t\n\x01\x64\x18\x02 \x01(\t\x12+\n\x07options\x18\x03 \x03(\x0b\x32\x1a.PrintRequest.OptionsEntry\x1a.\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\" \n\rPrintResponse\x12\x0f\n\x07message\x18\x01 \x01(\t25\n\x07Printer\x12*\n\tPrintPage\x12\r.PrintRequest\x1a\x0e.PrintResponseb\x06proto3')
+  serialized_pb=_b('\n\x0bprint.proto\"\x90\x01\n\x0cPrintRequest\x12\x0e\n\x06\x63opies\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65stination\x18\x02 \x01(\t\x12+\n\x07options\x18\x03 \x03(\x0b\x32\x1a.PrintRequest.OptionsEntry\x1a.\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\" \n\rPrintResponse\x12\x0f\n\x07message\x18\x01 \x01(\t25\n\x07Printer\x12*\n\tPrintPage\x12\r.PrintRequest\x1a\x0e.PrintResponseb\x06proto3')
 )
 
 
@@ -59,8 +59,8 @@ _PRINTREQUEST_OPTIONSENTRY = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=103,
-  serialized_end=149,
+  serialized_start=114,
+  serialized_end=160,
 )
 
 _PRINTREQUEST = _descriptor.Descriptor(
@@ -71,14 +71,14 @@ _PRINTREQUEST = _descriptor.Descriptor(
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='pages', full_name='PrintRequest.pages', index=0,
+      name='copies', full_name='PrintRequest.copies', index=0,
       number=1, type=13, cpp_type=3, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='d', full_name='PrintRequest.d', index=1,
+      name='destination', full_name='PrintRequest.destination', index=1,
       number=2, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=_b("").decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
@@ -104,7 +104,7 @@ _PRINTREQUEST = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=16,
-  serialized_end=149,
+  serialized_end=160,
 )
 
 
@@ -134,8 +134,8 @@ _PRINTRESPONSE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=151,
-  serialized_end=183,
+  serialized_start=162,
+  serialized_end=194,
 )
 
 _PRINTREQUEST_OPTIONSENTRY.containing_type = _PRINTREQUEST
@@ -175,8 +175,8 @@ _PRINTER = _descriptor.ServiceDescriptor(
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=185,
-  serialized_end=238,
+  serialized_start=196,
+  serialized_end=249,
   methods=[
   _descriptor.MethodDescriptor(
     name='PrintPage',
