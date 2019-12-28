@@ -1,4 +1,4 @@
-var PROTO_PATH = __dirname + '/print.proto';
+var PROTO_PATH = __dirname + '/../proto/print.proto';
 var grpc = require('grpc');
 var protoLoader = require('@grpc/proto-loader');
 var packageDefinition = protoLoader.loadSync(
@@ -10,10 +10,10 @@ var packageDefinition = protoLoader.loadSync(
         defaults: true,
         oneofs: true
     });
-var hello_proto = grpc.loadPackageDefinition(packageDefinition);
+var print_proto = grpc.loadPackageDefinition(packageDefinition);
 
 function main() {
-    var client = new hello_proto.Printer('localhost:50051',
+    var client = new print_proto.Printer('localhost:50051',
         grpc.credentials.createInsecure());
     client.PrintPage({
         copies: 1, destination: "HP-LaserJet-p2015dn", options: {
