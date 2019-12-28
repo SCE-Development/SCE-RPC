@@ -9,11 +9,10 @@ import printme
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
-    def printMe(self, request, context):
-        response = print_pb2.printResponse()
-        response.message = printme.printMe(
+    def PrintPage(self, request, context):
+        response = print_pb2.PrintResponse()
+        response.message = printme.PrintMe(
             "JerryLeeResume.pdf", d=request.d, n=request.pages, options=request.options)
-        # response = print_pb2.printResponse(message=hellofunc.hi(request.name))
         return response
 
 

@@ -5,7 +5,7 @@ import os
 # os.system(command)
 
 
-def printMe(pdf, d="HP-LaserJet-p2015dn", n=1, options={}):
+def PrintMe(pdf, d="HP-LaserJet-p2015dn", n=1, options={}):
     # lp -n 1
     command = "lp -n " + str(n) + " "
     # all options
