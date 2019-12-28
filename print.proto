@@ -2,15 +2,15 @@ syntax = "proto3";
 
 
 service Printer {
-    rpc printMe (printRequest) returns (printResponse);
+    rpc PrintPage (PrintRequest) returns (PrintResponse);
 }
 
-message printRequest{
-    uint32 pages = 1;
-    string d = 2;
+message PrintRequest{
+    uint32 copies = 1;
+    string destination = 2;
     map<string, string> options = 3;
 }
 
-message printResponse{
+message PrintResponse{
     string message = 1;
 }

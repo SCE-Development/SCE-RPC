@@ -14,10 +14,10 @@ class PrinterStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.printMe = channel.unary_unary(
-        '/Printer/printMe',
-        request_serializer=print__pb2.printRequest.SerializeToString,
-        response_deserializer=print__pb2.printResponse.FromString,
+    self.PrintPage = channel.unary_unary(
+        '/Printer/PrintPage',
+        request_serializer=print__pb2.PrintRequest.SerializeToString,
+        response_deserializer=print__pb2.PrintResponse.FromString,
         )
 
 
@@ -25,7 +25,7 @@ class PrinterServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def printMe(self, request, context):
+  def PrintPage(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -35,10 +35,10 @@ class PrinterServicer(object):
 
 def add_PrinterServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'printMe': grpc.unary_unary_rpc_method_handler(
-          servicer.printMe,
-          request_deserializer=print__pb2.printRequest.FromString,
-          response_serializer=print__pb2.printResponse.SerializeToString,
+      'PrintPage': grpc.unary_unary_rpc_method_handler(
+          servicer.PrintPage,
+          request_deserializer=print__pb2.PrintRequest.FromString,
+          response_serializer=print__pb2.PrintResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
