@@ -1,11 +1,13 @@
 import subprocess
 import os
-
-# command = "ls"
-# os.system(command)
+import base64
 
 
-def PrintMe(pdf, d="HP-LaserJet-p2015dn", n=1, options={}):
+def PrintMe(raw, d="HP-LaserJet-p2015dn", n=1, options={}):
+    # raw = base64.b64decode(raw)
+    with open("tmp.pdf", "wb") as tmp:
+        tmp.write(raw)
+
     # lp -n 1
     command = "lp -n " + str(n) + " "
     # all options
@@ -17,17 +19,21 @@ def PrintMe(pdf, d="HP-LaserJet-p2015dn", n=1, options={}):
         else:
             command += "-o " + str(c) + "=" + str(options[c]) + " "
     command += "-d " + d + " "
-    command += str(pdf)
+    command += "tmp.pdf"
     print(command)
     os.system(command)
+    os.remove("tmp.pdf")
     return "printed"
 
 
-# test function
+# # test function
 # op = {
 #     "sides": "one-sided",
 #     "page-ranges": "NA"
 # }
 # n = 1
 # d = "HP-LaserJet-p2015dn"
-# printMe(pdf="sample.pdf", d=d, n=n, options=op)
+# raw = ""
+# with open("newpdf.txt", "rb") as f:
+#     raw = f.read()
+# PrintMe(raw=raw, d=d, n=n, options=op)
