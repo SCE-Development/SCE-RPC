@@ -15,9 +15,9 @@ longer need to rely on other services to host our printing page.
 ## Overview
 We use the client-server model where the client is written in node
 and the server is written in python. To modify the file to print, 
-change the following line in `printingServer.py`
+change the following line in `printingClient.py`
 ```python
-FILE_PATH = '../JerryLeeResume.pdf'
+let contents = fs.readFileSync(__dirname + '/../JerryLeeResume.pdf', 'base64')
 ```
 To modify the printing options, change the following line in `printClient.js`
 ```js
@@ -65,7 +65,8 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
         response.message = printme.PrintMe(
-            "JerryLeeResume.pdf", d=request.d, n=request.pages, options=request.options)
+            raw=request.encoded_file, d=request.destination,
+            n=request.copies, options=request.options)
         return response
 ```
 
@@ -105,6 +106,7 @@ message PrintRequest{
     uint32 copies = 1;
     string destination = 2;
     map<string, string> options = 3;
+    bytes encoded_file = 4;
 }
 ```
 The first field of `PrintRequest` is `copies`, which specifies the number of 
@@ -115,7 +117,7 @@ map of key value pairs, both of type `string`. This is to specify any
 additional options that can be sent via the LPD printing protocol. To read 
 more about the possible options, see this 
 [manual](https://www.cups.org/doc/man-lp.html#COMMON_JOB_OPTIONS) 
-for the `lp` command.
+for the `lp` command. Finally, `bytes encoded_file` is the raw pdf bytes, which will later be decoded later. 
 
 ```proto
 message PrintResponse{
@@ -139,7 +141,15 @@ gives a well documented explantion of RPC's and how to start using them.
 
 ### LPD Printing
 LPD printing is the main protocol used in the printers in the SCE. 
-Printing is controlled through a bash command `lp`, as seen in `printme.py`. 
+Printing is controlled through a bash command `lp`, as seen in
+this function in `printme.py`. 
+```
+def PrintMe(raw, d="HP-LaserJet-p2015dn", n=1, options={}):
+```
+`PrintMe` takes in raw pdf data and creates a temporary file out of it.
+Then, it uses its other parameters to determine where, how many, and
+how the file should be printed. Finally, the temporary file is 
+deleted. 
 A possible resulting command would be 
 ```
 lp -n 1 -o sides=one-sided -d HP-LaserJet-p2015dn JerryLeeResume.pdf
