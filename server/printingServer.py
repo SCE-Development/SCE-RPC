@@ -9,12 +9,11 @@ import printme
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
-    FILE_PATH = '../JerryLeeResume.pdf'
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
         response.message = printme.PrintMe(
-            self.FILE_PATH, d=request.destination,
+            raw=request.enc, d=request.destination,
             n=request.copies, options=request.options)
         return response
 
