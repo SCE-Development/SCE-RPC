@@ -21,35 +21,73 @@ let contents = fs.readFileSync(__dirname + '/../JerryLeeResume.pdf', 'base64')
 ```
 To modify the printing options, change the following line in `printClient.js`
 ```js
-client.PrintPage({
-        copies: 1, destination: "HP-LaserJet-p2015dn", options: {
-            "sides": "one-sided",
-            "page-ranges": "NA"
-        }
-    }
+const printOptions = {
+    'sides': 'one-sided',
+    'page-ranges': 'NA'
+};
 ```
 
+## Generating Code
+### Node
+To generate the `*_pb.js` files in `client/`, first install 
+[protoc-gen-grpc](https://www.npmjs.com/package/protoc-gen-grpc) using npm:
+
+```
+npm install -g protoc-gen-grpc
+```
+
+Then, generate the files from the **topmost directory** in this repository 
+using the tool:
+
+```
+protoc-gen-grpc \
+--js_out=import_style=commonjs,binary:./client/ \
+--grpc_out=./client --proto_path proto/ \
+./proto/print.proto
+```
+
+
+### Python
+To generate the `print_pb2*.py` files in `server/`, first install 
+[grpc for python](https://grpc.io/docs/quickstart/python/#install-grpc) using 
+pip:
+
+```
+python -m pip install grpcio
+```
+
+Then, generate the files from the **topmost directory** in this repository 
+using the tool:
+```
+python -m grpc_tools.protoc -I. \
+--python_out=. \
+--grpc_python_out=. print.proto
+```
 ### Client
 The printer RPC is called from `printClient.js`. An example of the function 
 is invoked below:
 
 ```js
-var client = new print_proto.Printer('localhost:50051',
+let client = new services.PrinterClient('localhost:50051',
         grpc.credentials.createInsecure());
-
-client.PrintPage({
-        copies: 1, destination: "HP-LaserJet-p2015dn", options: {
-            "sides": "one-sided",
-            "page-ranges": "NA"
-        }
-    }, function (err, response) {
-        if (err) console.log(err);
-        console.log('Message:', response.message);
-    });
+let request = new messages.PrintRequest();
+request.setCopies(1);
+request.setDestination('HP-LaserJet-p2015dn');
+request.setEncodedFile(contents);
+for (let key in printOptions) {
+    request.getOptionsMap().set(key, printOptions[key]);
+}
+client.printPage(request, function (err, response) {
+    if (err) console.log(err);
+    console.log('Message: ', response.getMessage());
+});
 ```
 We first define the client to be of the Printer service type. As mentioned 
 above, the `Printer` service contains the RPC `PrintPage`, which is 
 implemented in the `printing_server.py` file.
+
+We then initialize a `PrintRequest` proto, setting each proto field to what we 
+send appropriate values.
 
 We then invoke the `PrintPage` RPC from the `.js` file, sending a 
 `PrintRequest` protobuf to the RPC.
