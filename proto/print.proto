@@ -9,7 +9,7 @@ message PrintRequest{
     uint32 copies = 1;
     string destination = 2;
     map<string, string> options = 3;
-    bytes enc = 4;
+    bytes encoded_file = 4;
 }
 
 message PrintResponse{
