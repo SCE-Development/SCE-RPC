@@ -1,28 +1,26 @@
-var PROTO_PATH = __dirname + '/../proto/print.proto';
-var grpc = require('grpc');
-var protoLoader = require('@grpc/proto-loader');
-var packageDefinition = protoLoader.loadSync(
-    PROTO_PATH,
-    {
-        keepCase: true,
-        longs: String,
-        enums: String,
-        defaults: true,
-        oneofs: true
-    });
-var print_proto = grpc.loadPackageDefinition(packageDefinition);
+const grpc = require('grpc');
+const fs = require('fs')
+var messages = require('./print_pb');
+var services = require('./print_grpc_pb');
+const printOptions = {
+    'sides': 'one-sided',
+    'page-ranges': 'NA'
+};
 
 function main() {
-    var client = new print_proto.Printer('localhost:50051',
+    let contents = fs.readFileSync(__dirname + '/../sample.pdf', 'base64');
+    let client = new services.PrinterClient('localhost:50051',
         grpc.credentials.createInsecure());
-    client.PrintPage({
-        copies: 1, destination: "HP-LaserJet-p2015dn", options: {
-            "sides": "one-sided",
-            "page-ranges": "NA"
-        }
-    }, function (err, response) {
+    let request = new messages.PrintRequest();
+    request.setCopies(1);
+    request.setDestination('HP-LaserJet-p2015dn');
+    request.setEncodedFile(contents);
+    for (let key in printOptions) {
+        request.getOptionsMap().set(key, printOptions[key]);
+    }
+    client.printPage(request, function (err, response) {
         if (err) console.log(err);
-        console.log('Message:', response.message);
+        console.log('Message: ', response.getMessage());
     });
 }
 

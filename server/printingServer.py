@@ -13,7 +13,7 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
         response.message = printme.PrintMe(
-            raw=request.enc, d=request.destination,
+            raw=request.encoded_file, d=request.destination,
             n=request.copies, options=request.options)
         return response
 
