@@ -5,14 +5,14 @@ import logging
 import print_pb2
 import print_pb2_grpc
 
-import printme
+import print_me
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
-        response.message = printme.PrintMe(
+        response.message = print_me.PrintMe(
             raw=request.encoded_file, d=request.destination,
             n=request.copies, options=request.options)
         return response
