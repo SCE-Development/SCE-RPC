@@ -3,7 +3,7 @@ const fs = require('fs')
 var messages = require('./print_pb');
 var services = require('./print_grpc_pb');
 
-function main(raw, copies, sides, pageRanges, destination) {
+function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     printOptions = {
         'sides': sides,
         'page-ranges': pageRanges
