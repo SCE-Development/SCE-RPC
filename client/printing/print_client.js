@@ -23,4 +23,4 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     });
 }
 
-module.exports = { main }
+module.exports = { sendPrintRequest }
