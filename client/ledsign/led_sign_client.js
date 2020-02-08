@@ -20,7 +20,7 @@ function healthCheck(officerName) {
   return new Promise(function (resolve, reject) {
     client.healthCheck(healthCheckRequest, function (err, response) {
       if (err || !response) {
-        resolve({ message: 'Sign is down', error: true })
+        reject({ message: 'Sign is down', error: true })
       } else {
         resolve({ message: response.getMessage(), error: false })
       }
@@ -55,9 +55,11 @@ function updateSignText(signData) {
   textRequest.setBackgroundColor(signData.backgroundColor)
   textRequest.setTextColor(signData.textColor)
   textRequest.setBorderColor(signData.borderColor)
-  client.updateSignText(textRequest, function (err, response) {
-    if (err) console.log(err)
-    console.log('Message: ', response)
+  return new Promise(function (resolve, reject) {
+    client.updateSignText(textRequest, function (err, response) {
+      if (err) reject({ message: 'Update failed', error: true })
+      resolve({ message: response && response.getMessage(), error: false })
+    })
   })
 }
 
