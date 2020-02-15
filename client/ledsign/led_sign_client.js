@@ -7,12 +7,13 @@ var services = require('./led_sign_grpc_pb')
  * we should get a response back containing "hello <officerName>!". If not, we
  * return an object that the sign is down.
  * @param {string} officerName The name of the officer interacting with the sign
+ * @param {string} signIp - The IP address of the sign.
  * @returns {Promise} Promise object which will contain the message from the
  * sign and if an error occurred.
  */
-function healthCheck(officerName) {
+function healthCheck(officerName, signIp) {
   const client = new services.LedSignClient(
-    '130.65.177.146:50051',
+    `${signIp}:50051`,
     grpc.credentials.createInsecure()
   )
   const healthCheckRequest = new messages.HealthCheckRequest()
@@ -42,10 +43,13 @@ function healthCheck(officerName) {
  * represented in hex color value.
  * @param {(string|undefined)} signData.borderColor - The color displayed at
  * the edge of the sign represneted in hex color value.
+ * @param {string} signIp - The IP address of the sign.
+ * @returns {Promise} Promise object which will contain the message from the
+ * sign and if an error occurred.
  */
-function updateSignText(signData) {
+function updateSignText(signData, signIp) {
   const client = new services.LedSignClient(
-    '130.65.177.146:50051',
+    `${signIp}:50051`,
     grpc.credentials.createInsecure()
   )
   const textRequest = new messages.LedSignRequest()
