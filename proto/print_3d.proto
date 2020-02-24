@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+service Printer3D{
+    rpc Print (PrintRequest) returns (PrintResponse);
+}
+
+message PrintRequest{
+    string member_name = 1;
+    uint32 print_volume = 2;
+    uint32 copies = 3;
+    bytes encoded_file =4;
+}
+
+message PrintResponse{
+    string message = 1;
+}
+
