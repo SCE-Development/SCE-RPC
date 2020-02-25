@@ -31,7 +31,7 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
             elif current_option == options[current_option]:
                 command += "-o " + str(current_option) + " "
             else:
-                command += "-o " + str(current_option) + "="
+                command += "-o " + str(current_option) + "="\
                 + str(options[current_option]) + " "
         command += "-d " + self.DeterminePrinterForJob(copies) + " "
         command += "tmp.pdf"
