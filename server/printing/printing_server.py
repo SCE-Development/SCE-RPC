@@ -1,20 +1,49 @@
 import grpc
 from concurrent import futures
 import logging
+import os
 
 import print_pb2
 import print_pb2_grpc
 
-import print_me
-
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
+    left_pages = 0
+    right_pages = 0
+
+    def DeterminePrinterForJob(self, copies):
+        if (self.left_pages > self.right_pages):
+            self.right_pages += copies
+            return "HP-LaserJet-p2015dn-right"
+        else:
+            self.left_pages += copies
+            return "HP-LaserJet-p2015dn-left"
+
+    def SendRequestToPrinter(self, encoded_file, copies=1, options={}):
+        with open("tmp.pdf", "wb") as tmp:
+            tmp.write(encoded_file)
+
+        command = "lp -n " + str(copies) + " "
+        # all options
+        for current_option in options:
+            if options[current_option] == "NA":
+                continue
+            elif current_option == options[current_option]:
+                command += "-o " + str(current_option) + " "
+            else:
+                command += "-o " + str(current_option) + "="\
+                + str(options[current_option]) + " "
+        command += "-d " + self.DeterminePrinterForJob(copies) + " "
+        command += "tmp.pdf"
+        os.system(command)
+        os.remove("tmp.pdf")
+        return "printed"
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
-        response.message = print_me.PrintMe(
-            raw=request.encoded_file, d=request.destination,
-            n=request.copies, options=request.options)
+        response.message = self.SendRequestToPrinter(
+            encoded_file=request.encoded_file,
+            copies=request.copies, options=request.options)
         return response
 
 

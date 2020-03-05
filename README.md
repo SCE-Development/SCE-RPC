@@ -43,7 +43,7 @@ using the tool:
 protoc-gen-grpc \
 --js_out=import_style=commonjs,binary:./client/ \
 --grpc_out=./client --proto_path proto/ \
-./proto/print.proto
+./proto/<your proto file here>
 ```
 
 
@@ -53,15 +53,14 @@ To generate the `print_pb2*.py` files in `server/`, first install
 pip:
 
 ```
-python -m pip install grpcio
+python3 -m pip install grpcio
 ```
 
 Then, generate the files from the **topmost directory** in this repository 
 using the tool:
 ```
-python -m grpc_tools.protoc -I. \
---python_out=. \
---grpc_python_out=. print.proto
+cd proto && python3 -m grpc_tools.protoc -I. --python_out=. \
+--grpc_python_out=. <your proto here>
 ```
 ### Client
 The printer RPC is called from `printClient.js`. An example of the function 
