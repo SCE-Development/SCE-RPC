@@ -9,9 +9,9 @@ def decodeFile(text):
         stl.write(decoded_string)
 
 def encodeFile(stl):
-    # encoded_string = ""
-    # with open(stl, "rb") as stl_file:
-    #     encoded_string = base64.b64encode(stl_file.read())
+    encoded_string = ""
+    with open(stl, "rb") as stl_file:
+        encoded_string = base64.b64encode(stl_file.read())
     # print(encoded_string)
     with open("newstl.txt", "w") as rawbytes:
         rawbytes.write(str(encoded_string))
