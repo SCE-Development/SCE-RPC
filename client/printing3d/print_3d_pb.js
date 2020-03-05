@@ -61,8 +61,9 @@ proto.PrintRequest.prototype.toObject = function(opt_includeInstance) {
 proto.PrintRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     memberName: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    printVolume: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    copies: jspb.Message.getFieldWithDefault(msg, 3, 0)
+    printVolumeCubicCm: jspb.Message.getFieldWithDefault(msg, 2, 0),
+    copies: jspb.Message.getFieldWithDefault(msg, 3, 0),
+    encodedFile: msg.getEncodedFile_asB64()
   };
 
   if (includeInstance) {
@@ -104,12 +105,16 @@ proto.PrintRequest.deserializeBinaryFromReader = function(msg, reader) {
       msg.setMemberName(value);
       break;
     case 2:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setPrintVolume(value);
+      var value = /** @type {number} */ (reader.readUint32());
+      msg.setPrintVolumeCubicCm(value);
       break;
     case 3:
-      var value = /** @type {number} */ (reader.readInt32());
+      var value = /** @type {number} */ (reader.readUint32());
       msg.setCopies(value);
+      break;
+    case 4:
+      var value = /** @type {!Uint8Array} */ (reader.readBytes());
+      msg.setEncodedFile(value);
       break;
     default:
       reader.skipField();
@@ -147,17 +152,24 @@ proto.PrintRequest.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getPrintVolume();
+  f = message.getPrintVolumeCubicCm();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       2,
       f
     );
   }
   f = message.getCopies();
   if (f !== 0) {
-    writer.writeInt32(
+    writer.writeUint32(
       3,
+      f
+    );
+  }
+  f = message.getEncodedFile_asU8();
+  if (f.length > 0) {
+    writer.writeBytes(
+      4,
       f
     );
   }
@@ -180,22 +192,22 @@ proto.PrintRequest.prototype.setMemberName = function(value) {
 
 
 /**
- * optional int32 print_volume = 2;
+ * optional uint32 print_volume_cubic_cm = 2;
  * @return {number}
  */
-proto.PrintRequest.prototype.getPrintVolume = function() {
+proto.PrintRequest.prototype.getPrintVolumeCubicCm = function() {
   return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
 };
 
 
 /** @param {number} value */
-proto.PrintRequest.prototype.setPrintVolume = function(value) {
+proto.PrintRequest.prototype.setPrintVolumeCubicCm = function(value) {
   jspb.Message.setProto3IntField(this, 2, value);
 };
 
 
 /**
- * optional int32 copies = 3;
+ * optional uint32 copies = 3;
  * @return {number}
  */
 proto.PrintRequest.prototype.getCopies = function() {
@@ -206,6 +218,45 @@ proto.PrintRequest.prototype.getCopies = function() {
 /** @param {number} value */
 proto.PrintRequest.prototype.setCopies = function(value) {
   jspb.Message.setProto3IntField(this, 3, value);
+};
+
+
+/**
+ * optional bytes encoded_file = 4;
+ * @return {!(string|Uint8Array)}
+ */
+proto.PrintRequest.prototype.getEncodedFile = function() {
+  return /** @type {!(string|Uint8Array)} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * optional bytes encoded_file = 4;
+ * This is a type-conversion wrapper around `getEncodedFile()`
+ * @return {string}
+ */
+proto.PrintRequest.prototype.getEncodedFile_asB64 = function() {
+  return /** @type {string} */ (jspb.Message.bytesAsB64(
+      this.getEncodedFile()));
+};
+
+
+/**
+ * optional bytes encoded_file = 4;
+ * Note that Uint8Array is not supported on all browsers.
+ * @see http://caniuse.com/Uint8Array
+ * This is a type-conversion wrapper around `getEncodedFile()`
+ * @return {!Uint8Array}
+ */
+proto.PrintRequest.prototype.getEncodedFile_asU8 = function() {
+  return /** @type {!Uint8Array} */ (jspb.Message.bytesAsU8(
+      this.getEncodedFile()));
+};
+
+
+/** @param {!(string|Uint8Array)} value */
+proto.PrintRequest.prototype.setEncodedFile = function(value) {
+  jspb.Message.setProto3BytesField(this, 4, value);
 };
 
 

@@ -6,7 +6,7 @@ service Printer3D{
 
 message PrintRequest{
     string member_name = 1;
-    uint32 print_volume = 2;
+    uint32 print_volume_cubic_cm = 2;
     uint32 copies = 3;
     bytes encoded_file =4;
 }

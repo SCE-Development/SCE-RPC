@@ -27,9 +27,9 @@ function deserialize_PrintResponse(buffer_arg) {
 }
 
 
-var Print3DService = exports.Print3DService = {
+var Printer3DService = exports.Printer3DService = {
   print: {
-    path: '/Print3D/Print',
+    path: '/Printer3D/Print',
     requestStream: false,
     responseStream: false,
     requestType: print_3d_pb.PrintRequest,
@@ -41,4 +41,4 @@ var Print3DService = exports.Print3DService = {
   },
 };
 
-exports.Print3DClient = grpc.makeGenericClientConstructor(Print3DService);
+exports.Printer3DClient = grpc.makeGenericClientConstructor(Printer3DService);
