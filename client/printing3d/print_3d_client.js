@@ -13,9 +13,9 @@ function send3dPrintRequest(raw, name, volume, copies){
     request.setPrintVolumeCubicCm(volume);
     client.print(request, function (err, response){
         if(err) console.log(err);
-        console.log('Message:',  response.getMessage());
+        // console.log('Message:',  response.getMessage());
     });
 }
-send3dPrintRequest(null, "lawrence", 13,2);
+// send3dPrintRequest(null, "lawrence", 13,2);
 
 module.exports = {send3dPrintRequest}
