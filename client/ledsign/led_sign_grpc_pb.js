@@ -4,26 +4,15 @@
 var grpc = require('grpc');
 var led_sign_pb = require('./led_sign_pb.js');
 
-function serialize_HealthCheckRequest(arg) {
-  if (!(arg instanceof led_sign_pb.HealthCheckRequest)) {
-    throw new Error('Expected argument of type HealthCheckRequest');
+function serialize_LedSignRecord(arg) {
+  if (!(arg instanceof led_sign_pb.LedSignRecord)) {
+    throw new Error('Expected argument of type LedSignRecord');
   }
   return Buffer.from(arg.serializeBinary());
 }
 
-function deserialize_HealthCheckRequest(buffer_arg) {
-  return led_sign_pb.HealthCheckRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
-function serialize_HealthCheckResponse(arg) {
-  if (!(arg instanceof led_sign_pb.HealthCheckResponse)) {
-    throw new Error('Expected argument of type HealthCheckResponse');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_HealthCheckResponse(buffer_arg) {
-  return led_sign_pb.HealthCheckResponse.deserializeBinary(new Uint8Array(buffer_arg));
+function deserialize_LedSignRecord(buffer_arg) {
+  return led_sign_pb.LedSignRecord.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_LedSignRequest(arg) {
@@ -54,21 +43,21 @@ var LedSignService = exports.LedSignService = {
     path: '/LedSign/HealthCheck',
     requestStream: false,
     responseStream: false,
-    requestType: led_sign_pb.HealthCheckRequest,
-    responseType: led_sign_pb.HealthCheckResponse,
-    requestSerialize: serialize_HealthCheckRequest,
-    requestDeserialize: deserialize_HealthCheckRequest,
-    responseSerialize: serialize_HealthCheckResponse,
-    responseDeserialize: deserialize_HealthCheckResponse,
+    requestType: led_sign_pb.LedSignRequest,
+    responseType: led_sign_pb.LedSignRecord,
+    requestSerialize: serialize_LedSignRequest,
+    requestDeserialize: deserialize_LedSignRequest,
+    responseSerialize: serialize_LedSignRecord,
+    responseDeserialize: deserialize_LedSignRecord,
   },
   updateSignText: {
     path: '/LedSign/UpdateSignText',
     requestStream: false,
     responseStream: false,
-    requestType: led_sign_pb.LedSignRequest,
+    requestType: led_sign_pb.LedSignRecord,
     responseType: led_sign_pb.LedSignResponse,
-    requestSerialize: serialize_LedSignRequest,
-    requestDeserialize: deserialize_LedSignRequest,
+    requestSerialize: serialize_LedSignRecord,
+    requestDeserialize: deserialize_LedSignRecord,
     responseSerialize: serialize_LedSignResponse,
     responseDeserialize: deserialize_LedSignResponse,
   },
