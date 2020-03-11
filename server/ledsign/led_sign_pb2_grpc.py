@@ -16,12 +16,12 @@ class LedSignStub(object):
     """
     self.HealthCheck = channel.unary_unary(
         '/LedSign/HealthCheck',
-        request_serializer=led__sign__pb2.HealthCheckRequest.SerializeToString,
-        response_deserializer=led__sign__pb2.HealthCheckResponse.FromString,
+        request_serializer=led__sign__pb2.LedSignRequest.SerializeToString,
+        response_deserializer=led__sign__pb2.LedSignRecord.FromString,
         )
     self.UpdateSignText = channel.unary_unary(
         '/LedSign/UpdateSignText',
-        request_serializer=led__sign__pb2.LedSignRequest.SerializeToString,
+        request_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
         response_deserializer=led__sign__pb2.LedSignResponse.FromString,
         )
 
@@ -49,12 +49,12 @@ def add_LedSignServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'HealthCheck': grpc.unary_unary_rpc_method_handler(
           servicer.HealthCheck,
-          request_deserializer=led__sign__pb2.HealthCheckRequest.FromString,
-          response_serializer=led__sign__pb2.HealthCheckResponse.SerializeToString,
+          request_deserializer=led__sign__pb2.LedSignRequest.FromString,
+          response_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
       ),
       'UpdateSignText': grpc.unary_unary_rpc_method_handler(
           servicer.UpdateSignText,
-          request_deserializer=led__sign__pb2.LedSignRequest.FromString,
+          request_deserializer=led__sign__pb2.LedSignRecord.FromString,
           response_serializer=led__sign__pb2.LedSignResponse.SerializeToString,
       ),
   }

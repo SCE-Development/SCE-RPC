@@ -2,27 +2,24 @@ syntax = "proto3";
 
 
 service LedSign {
-  rpc HealthCheck (HealthCheckRequest) returns (HealthCheckResponse);
-  rpc UpdateSignText (LedSignRequest) returns (LedSignResponse);
-}
-
-message HealthCheckRequest{
-  string officer_name = 1;
-}
-
-message HealthCheckResponse{
-  string message = 1;
+  rpc HealthCheck (LedSignRequest) returns (LedSignRecord);
+  rpc UpdateSignText (LedSignRecord) returns (LedSignResponse);
 }
 
 message LedSignRequest{
+  string officer_name = 1;
+}
+
+message LedSignResponse{
+  string message = 1;
+}
+
+message LedSignRecord{
   string text = 1;
   int32 brightness = 2;
   int32 scroll_speed = 3;
   string background_color = 4;
   string text_color = 5;
   string border_color = 6;
-}
-
-message LedSignResponse{
-    string message = 1;
+  string message = 7;
 }

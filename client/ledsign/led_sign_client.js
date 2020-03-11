@@ -16,14 +16,14 @@ function healthCheck(officerName, signIp) {
     `${signIp}:50051`,
     grpc.credentials.createInsecure()
   )
-  const healthCheckRequest = new messages.HealthCheckRequest()
+  const healthCheckRequest = new messages.LedSignRequest()
   healthCheckRequest.setOfficerName(officerName)
   return new Promise(function (resolve, reject) {
     client.healthCheck(healthCheckRequest, function (err, response) {
       if (err || !response) {
         reject({ message: 'Sign is down', error: true })
       } else {
-        resolve({ message: response.getMessage(), error: false })
+        resolve({ message: response, error: false })
       }
     })
   })
@@ -31,7 +31,7 @@ function healthCheck(officerName, signIp) {
 
 /**
  * This function updates the text of the sign in the SCE club room.
- * @param {*} signData An object containing all of the information to update
+ * @param {Object} signData An object containing all of the information to update
  * the sign with.
  * @param {(string|undefined)} signData.text - The text to display on the sign
  * @param {string} signData.brightness - The brightness of the sign
@@ -52,7 +52,7 @@ function updateSignText(signData, signIp) {
     `${signIp}:50051`,
     grpc.credentials.createInsecure()
   )
-  const textRequest = new messages.LedSignRequest()
+  const textRequest = new messages.LedSignRecord()
   textRequest.setText(signData.text)
   textRequest.setBrightness(signData.brightness)
   textRequest.setScrollSpeed(signData.scrollSpeed)
@@ -62,7 +62,7 @@ function updateSignText(signData, signIp) {
   return new Promise(function (resolve, reject) {
     client.updateSignText(textRequest, function (err, response) {
       if (err) reject({ message: 'Update failed', error: true })
-      resolve({ message: response && response.getMessage(), error: false })
+      resolve({ message: response, error: false })
     })
   })
 }

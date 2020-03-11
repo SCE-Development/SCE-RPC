@@ -13,6 +13,7 @@ from os import sep
 class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
     CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + sep
     proc = None
+    sign_data = {}
 
     def WriteCommandToSign(self, request):
         command = [
@@ -26,13 +27,18 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
                 "--set-font-filename", self.CURRENT_DIRECTORY + "fonts/9x18B.bdf",
             ]
         print(command)
-        
+        self.sign_data["text"] = request.text
+        self.sign_data["brightness"] = request.brightness
+        self.sign_data["scroll-speed"] = request.scroll_speed
+        self.sign_data["background-color"] = request.background_color
+        self.sign_data["font-color"] = request.text_color
+        self.sign_data["border-color"] = request.border_color
+    
         if self.proc != None:
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
         
-
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignResponse()
         response.message = 'hello from pi'
@@ -41,8 +47,17 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         return response
 
     def HealthCheck(self, request, context):
-        response = led_sign_pb2.HealthCheckResponse()
-        response.message = f'hey {request.officer_name} im doing great!'
+        response = led_sign_pb2.LedSignRecord()
+        if self.sign_data:
+            response.text = self.sign_data["text"]
+            response.brightness = self.sign_data["brightness"]
+            response.scroll_speed = self.sign_data["scroll-speed"]
+            response.background_color = self.sign_data["background-color"]
+            response.text_color = self.sign_data["font-color"]
+            response.border_color = self.sign_data["border-color"]
+
+        response.message = "hello from pi"
+        print('we got something!')
         return response
 
 def serve():
