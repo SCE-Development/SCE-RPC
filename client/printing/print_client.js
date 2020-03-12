@@ -19,12 +19,14 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     }
     return new Promise(function (resolve, reject) {
         client.printPage(request, function (err, response) {
-            if (err) reject({ message: 'Failed to print', error: true })
+            if (err || response.getMessage() == 'error') {
+                reject({ message: 'Failed to print', error: true })
+            }
             resolve({
                 message: response && response.getMessage(),
                 error: false
             })
-        });
+        })
     })
 }
 
