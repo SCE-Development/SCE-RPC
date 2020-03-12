@@ -8,15 +8,14 @@ import print_pb2_grpc
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
-    left_pages = 0
-    right_pages = 0
+    pages = 0
 
     def DeterminePrinterForJob(self, copies):
-        if (self.left_pages > self.right_pages):
-            self.right_pages += copies
+        if (self.pages > 0):
+            self.pages += copies
             return "HP-LaserJet-p2015dn-right"
         else:
-            self.left_pages += copies
+            self.pages -= copies
             return "HP-LaserJet-p2015dn-left"
 
     def SendRequestToPrinter(self, encoded_file, copies=1, options={}):
@@ -32,12 +31,12 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
                 command += "-o " + str(current_option) + " "
             else:
                 command += "-o " + str(current_option) + "="\
-                + str(options[current_option]) + " "
+                    + str(options[current_option]) + " "
         command += "-d " + self.DeterminePrinterForJob(copies) + " "
         command += "tmp.pdf"
-        os.system(command)
+        status = os.popen(command)
         os.remove("tmp.pdf")
-        return "printed"
+        return 'printed' if status else 'error'
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
