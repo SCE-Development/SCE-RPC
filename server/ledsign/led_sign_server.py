@@ -55,6 +55,13 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
             response.background_color = self.sign_data["background-color"]
             response.text_color = self.sign_data["font-color"]
             response.border_color = self.sign_data["border-color"]
+        else:
+            response.text = ""
+            response.brightness = 50
+            response.scroll_speed = 25
+            response.background_color = "#0000ff"
+            response.text_color = "#00ff00"
+            response.border_color = "#ff0000"
 
         response.message = "hello from pi"
         print('we got something!')
