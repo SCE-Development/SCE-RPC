@@ -22,8 +22,7 @@ class Printer3dServicer(print_3d_pb2_grpc.Printer3dServicer):
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    print_3d_pb2_grpc.add_Printer3dServicer_to_server(
-        Printer3dServicer(), server)
+    print_3d_pb2_grpc.add_Printer3dServicer_to_server(Printer3dServicer(), server)
     print('Starting server. Listening on port 50053.')
     server.add_insecure_port('[::]:50053')
     server.start()

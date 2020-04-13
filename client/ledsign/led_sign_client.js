@@ -16,10 +16,16 @@ function healthCheck(officerName, signIp) {
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
   );
-  const healthCheckRequest = new messages.LedSignRequest();
+  console.log(signIp);
+  
+  const healthCheckRequest = new messages.LedSignMessage();
   healthCheckRequest.setMessage(officerName);
+  console.log('nmooooo???????', healthCheckRequest);
+  
   return new Promise(function(resolve, reject) {
     client.healthCheck(healthCheckRequest, function(err, response) {
+      console.log('we in this fuck');
+      console.log(err, response);
       if (err || !response) {
         reject({ message: 'Sign is down', error: true });
       } else {

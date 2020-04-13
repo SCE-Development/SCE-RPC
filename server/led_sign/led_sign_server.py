@@ -61,6 +61,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         return response
 
 def serve():
+    print('whjatttt the fuck')
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     led_sign_pb2_grpc.add_LedSignServicer_to_server(LedSignServicer(), server)
     print('Starting server. Listening on port 50052.')
@@ -69,6 +70,8 @@ def serve():
     server.wait_for_termination()
 
 
+print('hi everyuone')
 if __name__ == '__main__':
+    print('ok lets go')
     logging.basicConfig()
     serve()

@@ -1,0 +1,48 @@
+version: '3'
+services:
+  rpc-api:
+    container_name: rpc-api
+    build:
+      context: ./
+      dockerfile: ./client/Dockerfile
+    ports:
+      - '8083:8083'
+      # - '50052:50052'
+    networks:
+      - test
+  2d-printing:
+    container_name: 2d-printing
+    build:
+      context: ./
+      dockerfile: ./server/printing/Dockerfile
+    volumes:
+      - "./modules:/usr/src/app/modules"
+    ports:
+      - '50051:50051'
+    networks:
+      - test
+  led-sign:
+    container_name: led-sign
+    build:
+      context: ./
+      dockerfile: ./server/led_sign/Dockerfile
+    volumes:
+      - "./modules:/usr/src/app/modules"
+    ports:
+      - '50052:50052'
+    networks:
+      - test
+  3d-printing:
+    container_name: 3d-printing
+    build:
+      context: ./
+      dockerfile: ./server/printing_3d/Dockerfile
+    volumes:
+      - "./modules:/usr/src/app/modules"
+    ports:
+      - '50053:50053'
+    networks:
+      - test
+networks:
+  test:
+      driver: bridge
