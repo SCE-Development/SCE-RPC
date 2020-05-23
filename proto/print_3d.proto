@@ -1,17 +1,17 @@
 syntax = "proto3";
 
-service Printer3D{
-    rpc Print (PrintRequest) returns (PrintResponse);
+service Printer3d{
+    rpc Handle3dPrint (Print3dRequest) returns (Print3dResponse);
 }
 
-message PrintRequest{
+message Print3dRequest{
     string member_name = 1;
     uint32 print_volume_cubic_cm = 2;
     uint32 copies = 3;
     bytes encoded_file =4;
 }
 
-message PrintResponse{
+message Print3dResponse{
     string message = 1;
 }
 

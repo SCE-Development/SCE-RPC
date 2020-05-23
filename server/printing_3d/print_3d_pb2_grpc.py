@@ -4,7 +4,7 @@ import grpc
 import print_3d_pb2 as print__3d__pb2
 
 
-class Printer3DStub(object):
+class Printer3dStub(object):
   # missing associated documentation comment in .proto file
   pass
 
@@ -14,18 +14,18 @@ class Printer3DStub(object):
     Args:
       channel: A grpc.Channel.
     """
-    self.Print = channel.unary_unary(
-        '/Printer3D/Print',
-        request_serializer=print__3d__pb2.PrintRequest.SerializeToString,
-        response_deserializer=print__3d__pb2.PrintResponse.FromString,
+    self.Handle3dPrint = channel.unary_unary(
+        '/Printer3d/Handle3dPrint',
+        request_serializer=print__3d__pb2.Print3dRequest.SerializeToString,
+        response_deserializer=print__3d__pb2.Print3dResponse.FromString,
         )
 
 
-class Printer3DServicer(object):
+class Printer3dServicer(object):
   # missing associated documentation comment in .proto file
   pass
 
-  def Print(self, request, context):
+  def Handle3dPrint(self, request, context):
     # missing associated documentation comment in .proto file
     pass
     context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -33,14 +33,14 @@ class Printer3DServicer(object):
     raise NotImplementedError('Method not implemented!')
 
 
-def add_Printer3DServicer_to_server(servicer, server):
+def add_Printer3dServicer_to_server(servicer, server):
   rpc_method_handlers = {
-      'Print': grpc.unary_unary_rpc_method_handler(
-          servicer.Print,
-          request_deserializer=print__3d__pb2.PrintRequest.FromString,
-          response_serializer=print__3d__pb2.PrintResponse.SerializeToString,
+      'Handle3dPrint': grpc.unary_unary_rpc_method_handler(
+          servicer.Handle3dPrint,
+          request_deserializer=print__3d__pb2.Print3dRequest.FromString,
+          response_serializer=print__3d__pb2.Print3dResponse.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'Printer3D', rpc_method_handlers)
+      'Printer3d', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))
