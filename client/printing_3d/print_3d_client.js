@@ -3,7 +3,7 @@ var messages = require('./print_3d_pb');
 var services = require('./print_3d_grpc_pb');
 
 function send3dPrintRequest(raw, name, volume, copies) {
-    let client = new services.Printer3dClient('localhost:50051',
+    let client = new services.Printer3dClient('localhost:50053',
         grpc.credentials.createInsecure());
     let request = new messages.Print3dRequest();
     request.setCopies(copies);
@@ -15,6 +15,5 @@ function send3dPrintRequest(raw, name, volume, copies) {
         console.log('Message:', response.getMessage());
     });
 }
-send3dPrintRequest(null, "lawrence", 13, 2);
 
 module.exports = { send3dPrintRequest }
