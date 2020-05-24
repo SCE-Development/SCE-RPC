@@ -63,8 +63,8 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     led_sign_pb2_grpc.add_LedSignServicer_to_server(LedSignServicer(), server)
-    print('Starting server. Listening on port 50051.')
-    server.add_insecure_port('[::]:50051')
+    print('Starting server. Listening on port 50052.')
+    server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
 
