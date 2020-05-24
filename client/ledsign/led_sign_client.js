@@ -13,7 +13,7 @@ var services = require('./led_sign_grpc_pb')
  */
 function healthCheck(officerName, signIp) {
   const client = new services.LedSignClient(
-    `${signIp}:50051`,
+    `${signIp}:50052`,
     grpc.credentials.createInsecure()
   )
   const healthCheckRequest = new messages.LedSignRequest()
@@ -49,7 +49,7 @@ function healthCheck(officerName, signIp) {
  */
 function updateSignText(signData, signIp) {
   const client = new services.LedSignClient(
-    `${signIp}:50051`,
+    `${signIp}:50052`,
     grpc.credentials.createInsecure()
   )
   const textRequest = new messages.LedSignRecord()
