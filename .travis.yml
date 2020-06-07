@@ -2,6 +2,8 @@ language: node_js
 node_js:
   - "stable"
 install:
+  - cp client/config/config.example.js client/config/config.js
   - npm install
 script:
  - npm run lint
+ - npm run test
