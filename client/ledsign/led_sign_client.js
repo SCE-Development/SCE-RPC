@@ -1,6 +1,6 @@
-const grpc = require('grpc')
-var messages = require('./led_sign_pb')
-var services = require('./led_sign_grpc_pb')
+const grpc = require('grpc');
+const messages = require('./led_sign_pb');
+const services = require('./led_sign_grpc_pb');
 
 /**
  * This function checks if the LED Sign is up and running. If the sign is up,
@@ -15,24 +15,24 @@ function healthCheck(officerName, signIp) {
   const client = new services.LedSignClient(
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
-  )
-  const healthCheckRequest = new messages.LedSignRequest()
-  healthCheckRequest.setOfficerName(officerName)
-  return new Promise(function (resolve, reject) {
-    client.healthCheck(healthCheckRequest, function (err, response) {
+  );
+  const healthCheckRequest = new messages.LedSignRequest();
+  healthCheckRequest.setOfficerName(officerName);
+  return new Promise(function(resolve, reject) {
+    client.healthCheck(healthCheckRequest, function(err, response) {
       if (err || !response) {
-        reject({ message: 'Sign is down', error: true })
+        reject({ message: 'Sign is down', error: true });
       } else {
-        resolve({ message: response, error: false })
+        resolve({ message: response, error: false });
       }
-    })
-  })
+    });
+  });
 }
 
 /**
  * This function updates the text of the sign in the SCE club room.
- * @param {Object} signData An object containing all of the information to update
- * the sign with.
+ * @param {Object} signData An object containing all of the information to
+ * update the sign with.
  * @param {(string|undefined)} signData.text - The text to display on the sign
  * @param {string} signData.brightness - The brightness of the sign
  * @param {string} signData.scrollSpeed - How fast the text will scroll across
@@ -51,20 +51,20 @@ function updateSignText(signData, signIp) {
   const client = new services.LedSignClient(
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
-  )
-  const textRequest = new messages.LedSignRecord()
-  textRequest.setText(signData.text)
-  textRequest.setBrightness(signData.brightness)
-  textRequest.setScrollSpeed(signData.scrollSpeed)
-  textRequest.setBackgroundColor(signData.backgroundColor)
-  textRequest.setTextColor(signData.textColor)
-  textRequest.setBorderColor(signData.borderColor)
-  return new Promise(function (resolve, reject) {
-    client.updateSignText(textRequest, function (err, response) {
-      if (err) reject({ message: 'Update failed', error: true })
-      resolve({ message: response, error: false })
-    })
-  })
+  );
+  const textRequest = new messages.LedSignRecord();
+  textRequest.setText(signData.text);
+  textRequest.setBrightness(signData.brightness);
+  textRequest.setScrollSpeed(signData.scrollSpeed);
+  textRequest.setBackgroundColor(signData.backgroundColor);
+  textRequest.setTextColor(signData.textColor);
+  textRequest.setBorderColor(signData.borderColor);
+  return new Promise(function(resolve, reject) {
+    client.updateSignText(textRequest, function(err, response) {
+      if (err) reject({ message: 'Update failed', error: true });
+      resolve({ message: response, error: false });
+    });
+  });
 }
 
-module.exports = { healthCheck, updateSignText }
+module.exports = { healthCheck, updateSignText };
