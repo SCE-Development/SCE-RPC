@@ -2,6 +2,9 @@
     "name": "sce-rpc",
     "version": "1.0.0",
     "description": "Remote procedure calls for Core-v4",
+    "scripts": {
+        "lint": "./node_modules/.bin/eslint ./"
+    },
     "dependencies": {
         "@grpc/proto-loader": "^0.5.3",
         "cors": "^2.8.5",
@@ -9,5 +12,8 @@
         "google-protobuf": "^3.11.4",
         "grpc": "^1.24.2",
         "http": "0.0.1-security"
+    },
+    "devDependencies": {
+        "eslint": "^7.2.0"
     }
 }

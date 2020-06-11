@@ -1,0 +1,4 @@
+server/
+proto/
+client/**/*_pb.js
+node_modules/
