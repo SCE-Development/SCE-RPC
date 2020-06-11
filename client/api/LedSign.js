@@ -1,6 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const { healthCheck, updateSignText } = require('../ledsign/led_sign_client');
+const {
+  healthCheck, updateSignText,
+  addMessageToQueue, clearMessageQueue
+} = require('../ledsign/led_sign_client');
 const {
   OK, BAD_REQUEST, NOT_FOUND, LED_SIGN_IP
 } = require('../config/config');
@@ -30,6 +33,34 @@ router.post('/LedSign/updateSignText', async (req, res) => {
     return res.sendStatus(BAD_REQUEST);
   }
   updateSignText(req.body, LED_SIGN_IP)
+    .then(response => {
+      return res.status(OK).send({ ...response });
+    })
+    .catch(error => {
+      return res.status(NOT_FOUND).send({ ...error });
+    });
+});
+
+router.post('/LedSign/addMessageToQueue', (req, res) => {
+  addMessageToQueue(req.body, LED_SIGN_IP)
+    .then(response => {
+      const { message } = response;
+      return res.status(OK).send({
+        text: message.getText(),
+        brightness: message.getBrightness(),
+        scrollSpeed: message.getScrollSpeed(),
+        backgroundColor: message.getBackgroundColor(),
+        textColor: message.getTextColor(),
+        borderColor: message.getBorderColor()
+      });
+    })
+    .catch(error => {
+      return res.status(NOT_FOUND).send({ ...error });
+    });
+});
+
+router.post('/LedSign/clearMessageQueue', (req, res) => {
+  clearMessageQueue(req.body, LED_SIGN_IP)
     .then(response => {
       return res.status(OK).send({ ...response });
     })

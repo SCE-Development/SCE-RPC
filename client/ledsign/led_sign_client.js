@@ -16,7 +16,7 @@ function healthCheck(officerName, signIp) {
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
   );
-  const healthCheckRequest = new messages.LedSignRequest();
+  const healthCheckRequest = new messages.LedSignMessage();
   healthCheckRequest.setMessage(officerName);
   return new Promise(function(resolve, reject) {
     client.healthCheck(healthCheckRequest, function(err, response) {
@@ -67,4 +67,67 @@ function updateSignText(signData, signIp) {
   });
 }
 
-module.exports = { healthCheck, updateSignText };
+/**
+ * This function adds the text of a message to a queue of messages to be
+ * displayed on the LED sign.
+ * @param {Object} signMessage - An object containing the desired message a user
+ * wants to send to a sign.
+ * @param {string} signIp - The IP address of the sign.
+ * @returns {Promise} Promise object which will contain the message from the
+ * sign and if an error occurred.
+ */
+function addMessageToQueue(signMessage, signIp) {
+  const client = new services.LedSignClient(
+    `${signIp}:50052`,
+    grpc.credentials.createInsecure()
+  );
+
+  const signMessageRequest = new messages.LedSignRecord();
+
+  signMessageRequest.setText(signMessage.text);
+  signMessageRequest.setBrightness(signMessage.brightness);
+  signMessageRequest.setScrollSpeed(signMessage.scrollSpeed);
+  signMessageRequest.setBackgroundColor(signMessage.backgroundColor);
+  signMessageRequest.setTextColor(signMessage.textColor);
+  signMessageRequest.setBorderColor(signMessage.borderColor);
+  signMessageRequest.setMessage(signMessage);
+
+  return new Promise(function(resolve, reject) {
+    client.addMessageToQueue(signMessageRequest, function(err, response) {
+      if (err) reject({ message: 'Message not added to queue', error: true });
+      resolve({ message: response, error: false });
+    });
+  });
+}
+
+/**
+ * This function clears the queue of messages to be displayed on the LED sign.
+ * @param {Object} signMessage - An object containing the desired message to be
+ * removed from the queue.
+ * @param {string} signIp - The IP address of the sign.
+ * @returns {Promise} Promise object which will contain the message from the
+ * sign and if an error occurred.
+ */
+function clearMessageQueue(signMessage, signIp) {
+  const client = new services.LedSignClient(
+    `${signIp}:50052`,
+    grpc.credentials.createInsecure()
+  );
+
+  const clearMessageRequest = new messages.LedSignMessage();
+  clearMessageRequest.setMessage(signMessage);
+
+  return new Promise(function(resolve, reject) {
+    client.clearMessageQueue(clearMessageRequest, function(err, response) {
+      if (err) reject({ message: 'Message queue not cleared', error: true });
+      resolve({ message: response, error: false });
+    });
+  });
+}
+
+module.exports = {
+  healthCheck,
+  updateSignText,
+  addMessageToQueue,
+  clearMessageQueue
+};

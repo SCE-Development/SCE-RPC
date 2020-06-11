@@ -4,7 +4,7 @@ syntax = "proto3";
 service LedSign {
   rpc HealthCheck (LedSignMessage) returns (LedSignRecord);
   rpc UpdateSignText (LedSignRecord) returns (LedSignMessage);
-  rpc AddMessageToQueue (LedSignMessage) returns (LedSignMessage);
+  rpc AddMessageToQueue (LedSignRecord) returns (LedSignMessage);
   rpc ClearMessageQueue (LedSignMessage) returns (LedSignMessage);
 }
 

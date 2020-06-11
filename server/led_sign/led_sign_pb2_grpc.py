@@ -25,7 +25,7 @@ class LedSignStub(object):
                 )
         self.AddMessageToQueue = channel.unary_unary(
                 '/LedSign/AddMessageToQueue',
-                request_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+                request_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
                 response_deserializer=led__sign__pb2.LedSignMessage.FromString,
                 )
         self.ClearMessageQueue = channel.unary_unary(
@@ -77,7 +77,7 @@ def add_LedSignServicer_to_server(servicer, server):
             ),
             'AddMessageToQueue': grpc.unary_unary_rpc_method_handler(
                     servicer.AddMessageToQueue,
-                    request_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                    request_deserializer=led__sign__pb2.LedSignRecord.FromString,
                     response_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
             ),
             'ClearMessageQueue': grpc.unary_unary_rpc_method_handler(
@@ -138,7 +138,7 @@ class LedSign(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/LedSign/AddMessageToQueue',
-            led__sign__pb2.LedSignMessage.SerializeToString,
+            led__sign__pb2.LedSignRecord.SerializeToString,
             led__sign__pb2.LedSignMessage.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

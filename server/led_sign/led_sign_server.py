@@ -8,11 +8,16 @@ import subprocess
 import os
 from os import sep
 
+from sign_message import SignMessage
+from led_sign_manager import SceLedSignManager
+
 
 class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
     CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + sep
     proc = None
     sign_data = {}
+    message_queue = []
+    sign_manager = SceLedSignManager()
 
     def WriteCommandToSign(self, request):
         command = [
@@ -38,8 +43,25 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
+    
+    def AddMessageToQueue(self, request, context):
+        sign_message = SignMessage(request)
+        self.message_queue.append(sign_message)
+        print('The message queue is now', self.message_queue)
+        for message in self.message_queue:
+            print(str(message))
+        response = led_sign_pb2.LedSignMessage()
+        return response
+        
+    def ClearMessageQueue(self, request, context):
+        self.message_queue.clear()
+        print(self.message_queue)
+        response = led_sign_pb2.LedSignMessage()
+        return response
 
     def UpdateSignText(self, request, context):
+        self.sign_manager.write_message_to_sign(request)
+        
         response = led_sign_pb2.LedSignMessage()
         response.message = 'hello from pi'
         self.WriteCommandToSign(request)
@@ -47,6 +69,8 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         return response
 
     def HealthCheck(self, request, context):
+        self.current_message = self.sign_manager.get_current_sign_message()
+        
         response = led_sign_pb2.LedSignRecord()
         if self.sign_data:
             response.text = self.sign_data["text"]
