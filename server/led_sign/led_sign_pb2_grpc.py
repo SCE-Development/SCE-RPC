@@ -5,59 +5,156 @@ import led_sign_pb2 as led__sign__pb2
 
 
 class LedSignStub(object):
-  # missing associated documentation comment in .proto file
-  pass
+    """Missing associated documentation comment in .proto file"""
 
-  def __init__(self, channel):
-    """Constructor.
+    def __init__(self, channel):
+        """Constructor.
 
-    Args:
-      channel: A grpc.Channel.
-    """
-    self.HealthCheck = channel.unary_unary(
-        '/LedSign/HealthCheck',
-        request_serializer=led__sign__pb2.LedSignRequest.SerializeToString,
-        response_deserializer=led__sign__pb2.LedSignRecord.FromString,
-        )
-    self.UpdateSignText = channel.unary_unary(
-        '/LedSign/UpdateSignText',
-        request_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
-        response_deserializer=led__sign__pb2.LedSignResponse.FromString,
-        )
+        Args:
+            channel: A grpc.Channel.
+        """
+        self.HealthCheck = channel.unary_unary(
+                '/LedSign/HealthCheck',
+                request_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+                response_deserializer=led__sign__pb2.LedSignRecord.FromString,
+                )
+        self.UpdateSignText = channel.unary_unary(
+                '/LedSign/UpdateSignText',
+                request_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
+                response_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                )
+        self.AddMessageToQueue = channel.unary_unary(
+                '/LedSign/AddMessageToQueue',
+                request_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+                response_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                )
+        self.ClearMessageQueue = channel.unary_unary(
+                '/LedSign/ClearMessageQueue',
+                request_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+                response_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                )
 
 
 class LedSignServicer(object):
-  # missing associated documentation comment in .proto file
-  pass
+    """Missing associated documentation comment in .proto file"""
 
-  def HealthCheck(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def HealthCheck(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
-  def UpdateSignText(self, request, context):
-    # missing associated documentation comment in .proto file
-    pass
-    context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-    context.set_details('Method not implemented!')
-    raise NotImplementedError('Method not implemented!')
+    def UpdateSignText(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AddMessageToQueue(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ClearMessageQueue(self, request, context):
+        """Missing associated documentation comment in .proto file"""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
 
 
 def add_LedSignServicer_to_server(servicer, server):
-  rpc_method_handlers = {
-      'HealthCheck': grpc.unary_unary_rpc_method_handler(
-          servicer.HealthCheck,
-          request_deserializer=led__sign__pb2.LedSignRequest.FromString,
-          response_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
-      ),
-      'UpdateSignText': grpc.unary_unary_rpc_method_handler(
-          servicer.UpdateSignText,
-          request_deserializer=led__sign__pb2.LedSignRecord.FromString,
-          response_serializer=led__sign__pb2.LedSignResponse.SerializeToString,
-      ),
-  }
-  generic_handler = grpc.method_handlers_generic_handler(
-      'LedSign', rpc_method_handlers)
-  server.add_generic_rpc_handlers((generic_handler,))
+    rpc_method_handlers = {
+            'HealthCheck': grpc.unary_unary_rpc_method_handler(
+                    servicer.HealthCheck,
+                    request_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                    response_serializer=led__sign__pb2.LedSignRecord.SerializeToString,
+            ),
+            'UpdateSignText': grpc.unary_unary_rpc_method_handler(
+                    servicer.UpdateSignText,
+                    request_deserializer=led__sign__pb2.LedSignRecord.FromString,
+                    response_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+            ),
+            'AddMessageToQueue': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddMessageToQueue,
+                    request_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                    response_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+            ),
+            'ClearMessageQueue': grpc.unary_unary_rpc_method_handler(
+                    servicer.ClearMessageQueue,
+                    request_deserializer=led__sign__pb2.LedSignMessage.FromString,
+                    response_serializer=led__sign__pb2.LedSignMessage.SerializeToString,
+            ),
+    }
+    generic_handler = grpc.method_handlers_generic_handler(
+            'LedSign', rpc_method_handlers)
+    server.add_generic_rpc_handlers((generic_handler,))
+
+
+ # This class is part of an EXPERIMENTAL API.
+class LedSign(object):
+    """Missing associated documentation comment in .proto file"""
+
+    @staticmethod
+    def HealthCheck(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/LedSign/HealthCheck',
+            led__sign__pb2.LedSignMessage.SerializeToString,
+            led__sign__pb2.LedSignRecord.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def UpdateSignText(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/LedSign/UpdateSignText',
+            led__sign__pb2.LedSignRecord.SerializeToString,
+            led__sign__pb2.LedSignMessage.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def AddMessageToQueue(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/LedSign/AddMessageToQueue',
+            led__sign__pb2.LedSignMessage.SerializeToString,
+            led__sign__pb2.LedSignMessage.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def ClearMessageQueue(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/LedSign/ClearMessageQueue',
+            led__sign__pb2.LedSignMessage.SerializeToString,
+            led__sign__pb2.LedSignMessage.FromString,
+            options, channel_credentials,
+            call_credentials, compression, wait_for_ready, timeout, metadata)

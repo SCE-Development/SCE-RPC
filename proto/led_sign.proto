@@ -2,15 +2,21 @@ syntax = "proto3";
 
 
 service LedSign {
-  rpc HealthCheck (LedSignRequest) returns (LedSignRecord);
-  rpc UpdateSignText (LedSignRecord) returns (LedSignResponse);
+  rpc HealthCheck (LedSignMessage) returns (LedSignRecord);
+  rpc UpdateSignText (LedSignRecord) returns (LedSignMessage);
+  rpc AddMessageToQueue (LedSignMessage) returns (LedSignMessage);
+  rpc ClearMessageQueue (LedSignMessage) returns (LedSignMessage);
 }
 
-message LedSignRequest{
-  string officer_name = 1;
-}
+// message LedSignRequest{
+//   string officer_name = 1;
+// }
 
-message LedSignResponse{
+// message LedSignResponse{
+//   string message = 1;
+// }
+
+message LedSignMessage{
   string message = 1;
 }
 
