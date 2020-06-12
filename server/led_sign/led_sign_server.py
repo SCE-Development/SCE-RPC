@@ -40,7 +40,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         self.proc = subprocess.Popen(command)
         
     def UpdateSignText(self, request, context):
-        response = led_sign_pb2.LedSignResponse()
+        response = led_sign_pb2.LedSignMessage()
         response.message = 'hello from pi'
         self.WriteCommandToSign(request)
         print('we got something!')
