@@ -1,5 +1,7 @@
 @ECHO OFF
 
+REM copy config.example.js to config.js
+copy client\config\config.example.js client\config\config.js
 REM Install client dependencies
 call npm install grpc google-protobuf @grpc/proto-loader
 REM Remove modules (virtual environment folder)
