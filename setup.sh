@@ -1,5 +1,10 @@
 #!/bin/bash
 
+function create_config() {
+    # copy config.example.js to config.js
+    cp client/config/config.example.js client/config/config.js
+}
+
 function install_rpc(){
     # Install client dependencies
     npm install
@@ -17,4 +22,5 @@ function install_rpc(){
     deactivate
 }
 
+create_config
 install_rpc
