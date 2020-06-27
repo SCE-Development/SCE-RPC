@@ -91,9 +91,9 @@ class SceRpcApiServer {
 // command line, we create a server instance and start listening for requests.
 if (typeof module !== 'undefined' && !module.parent) {
   const apiRoutes = [
-    __dirname + '2DPrinting.js',
-    __dirname + '3DPrinting.js',
-    __dirname + 'LedSign.js'
+    __dirname + '/2DPrinting.js',
+    __dirname + '/3DPrinting.js',
+    __dirname + '/LedSign.js'
   ];
   const server = new SceRpcApiServer(
     apiRoutes, 8083, '/SceRpcApi/');
