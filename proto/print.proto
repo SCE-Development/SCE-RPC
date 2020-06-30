@@ -3,15 +3,24 @@ syntax = "proto3";
 
 service Printer {
     rpc PrintPage (PrintRequest) returns (PrintResponse);
+    rpc HealthCheck (HealthCheckUpRequest) returns (PrinterHealthStatus);
 }
 
-message PrintRequest{
+message PrintRequest {
     uint32 copies = 1;
     string destination = 2;
     map<string, string> options = 3;
     bytes encoded_file = 4;
 }
 
-message PrintResponse{
+message PrintResponse {
+    string message = 1;
+}
+
+message HealthCheckUpRequest {
+    string member_name = 1;
+}
+
+message PrinterHealthStatus {
     string message = 1;
 }
