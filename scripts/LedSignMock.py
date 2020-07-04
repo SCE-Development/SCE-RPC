@@ -11,6 +11,7 @@ class LedSignMock(data):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     sign_data = []
 =======
 >>>>>>> Terminal Visual for LED Sign
@@ -22,6 +23,8 @@ class LedSignMock(data):
 =======
     sign_data = []
 >>>>>>> Fixes Requests
+=======
+>>>>>>> Terminal Visual for LED Sign
 
     menu = ['   ','SCE LED Sign Visualization ', ' ','Current Text: ', 'Current Brightness: ',' ',
     'Current Scroll Speed:', 'Current Background Color: ', 'Current Font Color:',
@@ -46,6 +49,7 @@ class LedSignMock(data):
             #calculates the location of the words (division changed by # of things in menu)
             y = height//3 - len(menu)//3 + idx
             stdscr.addstr(y, x, row)
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -94,6 +98,8 @@ class LedSignMock(data):
 >>>>>>> Terminal Visual for LED Sign
 =======
 >>>>>>> Fixes Requests
+=======
+>>>>>>> Terminal Visual for LED Sign
         stdscr.refresh()
 
     def creates_display(self, stdscr):
