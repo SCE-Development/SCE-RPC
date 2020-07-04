@@ -71,6 +71,7 @@ def serve():
     server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
+    visual = LedSignMock()
 
 if __name__ == '__main__':
     logging.basicConfig()
