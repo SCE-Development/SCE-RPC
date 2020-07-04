@@ -5,6 +5,7 @@ import os
 
 import print_pb2
 import print_pb2_grpc
+import SCEPrinter
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
