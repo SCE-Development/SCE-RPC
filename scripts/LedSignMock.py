@@ -7,7 +7,10 @@ parser.add_argument('--mock-output', help = "Displays Mock Output", )
 args = parser.parse_args()
 
 class LedSignMock(data):
+<<<<<<< HEAD
     sign_data = []
+=======
+>>>>>>> Terminal Visual for LED Sign
 
     menu = ['   ','SCE LED Sign Visualization ', ' ','Current Text: ', 'Current Brightness: ',' ',
     'Current Scroll Speed:', 'Current Background Color: ', 'Current Font Color:',
@@ -32,6 +35,7 @@ class LedSignMock(data):
             #calculates the location of the words (division changed by # of things in menu)
             y = height//3 - len(menu)//3 + idx
             stdscr.addstr(y, x, row)
+<<<<<<< HEAD
             if data[3]:
                 print(self.sign_data["text"])
             elif data[4]:
@@ -46,6 +50,8 @@ class LedSignMock(data):
                 print(self.sign_data["border-color"])
             else:
                 break
+=======
+>>>>>>> Terminal Visual for LED Sign
         stdscr.refresh()
 
     def creates_display(self, stdscr):
