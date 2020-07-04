@@ -2,6 +2,7 @@ import grpc
 import logging
 import concurrent
 from concurrent import futures
+from scripts import LedSignMock 
 
 import led_sign_pb2
 import led_sign_pb2_grpc
@@ -33,12 +34,14 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         self.sign_data["background-color"] = request.background_color
         self.sign_data["font-color"] = request.text_color
         self.sign_data["border-color"] = request.border_color
+
+        visual.update_sign_visual(self.sign_data)
     
         if self.proc != None:
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
-        
+
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignMessage()
         response.message = 'hello from pi'
@@ -67,6 +70,7 @@ def serve():
     server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
+    visual = LedSignMock()
 
 
 if __name__ == '__main__':
