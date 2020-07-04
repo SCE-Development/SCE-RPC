@@ -45,5 +45,4 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     });
   });
 }
-
-module.exports = { sendPrintRequest, healthCheck };
+module.exports = { sendPrintRequest };

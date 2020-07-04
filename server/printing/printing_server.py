@@ -5,19 +5,25 @@ import os
 
 import print_pb2
 import print_pb2_grpc
-import SCEPrinter
+from SCEPrinterMock import SCEPrinterMock
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
     # (left printer, right printer)
-    pages = (0, 0)
+    pages = 0
+    printer = ''
+    printer_mock = SCEPrinterMock()
 
     def DeterminePrinterForJob(self, copies):
-        if (self.pages[0] > 0):
-            self.pages[0] += copies
+        if self.pages > 0:
+            self.pages += copies
+            self.printer_mock.add_right_printer_copies(copies)
+            self.printer_mock.create_visual()
             return "HP-LaserJet-p2015dn-right"
         else:
-            self.pages[1] += copies
+            self.pages -= copies
+            self.printer_mock.add_left_printer_copies(copies)
+            self.printer_mock.create_visual()
             return "HP-LaserJet-p2015dn-left"
 
     def SendRequestToPrinter(self, encoded_file, copies=1, options={}):
@@ -37,8 +43,11 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
         chosenPrinter = self.DeterminePrinterForJob(copies)
         command += "-d " + chosenPrinter + " "
         command += "tmp.pdf"
-        status = os.popen(command)
-        os.remove("tmp.pdf")
+        status = True
+        #status = os.popen(command)
+        # os.remove("tmp.pdf")
+        self.printer = self.DeterminePrinterForJob(copies)
+
         return chosenPrinter if status else 'error'
 
     def PrintPage(self, request, context):
@@ -62,7 +71,6 @@ def serve():
     server.add_insecure_port('[::]:50051')
     server.start()
     server.wait_for_termination()
-    mock = SCEPrinter()
 
 
 if __name__ == '__main__':
