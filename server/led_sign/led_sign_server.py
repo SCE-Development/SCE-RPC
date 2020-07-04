@@ -1,6 +1,7 @@
 import grpc
 import logging
 from concurrent import futures
+from scripts import LedSignMock 
 
 import led_sign_pb2
 import led_sign_pb2_grpc
@@ -68,6 +69,7 @@ def serve():
     server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
+    visual = LedSignMock()
 
 
 if __name__ == '__main__':
