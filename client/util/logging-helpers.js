@@ -38,4 +38,23 @@ async function addSignLog(signRequest) {
   return saveSuccessful;
 }
 
-module.exports = { addErrorLog, addSignLog };
+/**
+ * Add a log to the PrintLog MongoDB collection
+ * @param {Object} printRequest An object containing information about the
+ * request some of the sign.
+ * @returns {boolean} If the save was successful or not.
+ */
+async function addPrintLog(printRequest) {
+  let saveSuccessful = true;
+  await axios.post(LOGGING_API_URL + '/api/PrintLog/addPrintLog', {
+    numPages: printRequest.pagesPrinted,
+    chosenPrinter: printRequest.destination,
+    printedDate: printRequest.printedDate,
+    memberName: printRequest.memberName
+  }).catch(err => {
+    saveSuccessful = false;
+  });
+  return saveSuccessful;
+}
+
+module.exports = { addErrorLog, addSignLog, addPrintLog };

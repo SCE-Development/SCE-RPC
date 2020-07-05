@@ -9,6 +9,7 @@ const { OK, BAD_REQUEST } = constants;
 const tools = require('../util/tools.js');
 const PrintFunctions =
   require('../../client/printing/print_client');
+const LoggingFunctions = require('../../client/util/logging-helpers');
 const sinon = require('sinon');
 
 let app = null;
@@ -23,11 +24,15 @@ const TEXT_REQUEST = {
   copies: 1,
   pageRanges: 'NA',
   sides: 'one-sided',
-  destination: 'HP-LaserJet-p2015dn'
+  destination: 'HP-LaserJet-p2015dn',
+  memberName: 'Bob Ross',
+  pagesPrinted: 3,
+  printedDate: new Date('07/02/2020').toISOString()
 };
 
 describe('2DPrinting', () => {
   const sendPrintRequestMock = sinon.stub(PrintFunctions, 'sendPrintRequest');
+  const addPrintLogStub = sinon.stub(LoggingFunctions, 'addPrintLog');
 
   before(done => {
     app = tools.initializeServer(__dirname + '/../../client/api/2DPrinting.js');
@@ -35,6 +40,7 @@ describe('2DPrinting', () => {
   });
 
   after(done => {
+    addPrintLogStub.restore();
     sendPrintRequestMock.restore();
     tools.terminateServer();
     done();
@@ -46,6 +52,7 @@ describe('2DPrinting', () => {
 
   describe('/POST sendPrintRequest', () => {
     it('Should return statuscode 200 when it prints', done => {
+      addPrintLogStub.resolves(SUCCESS_MESSAGE);
       sendPrintRequestMock.resolves(SUCCESS_MESSAGE);
       chai
         .request(app)
@@ -60,6 +67,7 @@ describe('2DPrinting', () => {
         });
     });
     it('Should return statuscode 400 when the RPC fails', done => {
+      addPrintLogStub.resolves(ERROR_MESSAGE);
       sendPrintRequestMock.rejects(ERROR_MESSAGE);
       chai
         .request(app)
