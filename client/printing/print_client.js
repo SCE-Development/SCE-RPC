@@ -3,6 +3,22 @@ const fs = require('fs');
 const messages = require('./print_pb');
 const services = require('./print_grpc_pb');
 
+function healthCheck() {
+  const client = new services.PrinterClient(
+    'localhost:50051', grpc.credentials.createInsecure()
+  );
+  const healthCheckRequest = new messages.PrintRequest();
+  return new Promise(function(resolve, reject) {
+    client.healthCheck(healthCheckRequest, function(err, response) {
+      if (err || !response) {
+        reject({ message: 'Printer is down', error: true });
+      } else {
+        resolve({ message: response, error: false });
+      }
+    });
+  });
+}
+
 function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
   printOptions = {
     'sides': sides,
@@ -30,4 +46,4 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
   });
 }
 
-module.exports = { sendPrintRequest };
+module.exports = { sendPrintRequest, healthCheck };
