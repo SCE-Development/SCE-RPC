@@ -7,7 +7,7 @@ function healthCheck() {
   const client = new services.PrinterClient(
     'localhost:50051', grpc.credentials.createInsecure()
   );
-  const healthCheckRequest = new messages.PrintRequest();
+  const healthCheckRequest = new messages.HealthCheckUpRequest();
   return new Promise(function(resolve, reject) {
     client.healthCheck(healthCheckRequest, function(err, response) {
       if (err || !response) {
