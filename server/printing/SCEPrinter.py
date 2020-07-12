@@ -68,7 +68,7 @@ class SCEPrinter(data):
 
         screen.refresh()
 
-    def create_visual(self, screen):
+    def create_visual(self):
         curses.curs_set(0)
         self.visual_components(screen)
         exitKey = screen.getch()
