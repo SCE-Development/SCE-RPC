@@ -9,14 +9,15 @@ import SCEPrinter
 
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
-    pages = 0
+    # (left printer, right printer)
+    pages = (0, 0)
 
     def DeterminePrinterForJob(self, copies):
-        if (self.pages > 0):
-            self.pages += copies
+        if (self.pages[0] > 0):
+            self.pages[0] += copies
             return "HP-LaserJet-p2015dn-right"
         else:
-            self.pages -= copies
+            self.pages[1] += copies
             return "HP-LaserJet-p2015dn-left"
 
     def SendRequestToPrinter(self, encoded_file, copies=1, options={}):
