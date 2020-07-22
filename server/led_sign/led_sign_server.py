@@ -35,7 +35,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         self.sign_data["font-color"] = request.text_color
         self.sign_data["border-color"] = request.border_color
 
-        visual.update_sign_visual(self.sign_data)
+        visual.update_sign_visual(self.sign_data);
     
         if self.proc != None:
             self.proc.kill()
