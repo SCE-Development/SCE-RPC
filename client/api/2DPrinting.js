@@ -9,7 +9,6 @@ const { addSignLog } = require('../util/logging-helpers');
 router.post('/Printer/healthCheck', (req, res) => {
   healthCheck()
     .then(response => {
-      console.log(response);
       return res.status(OK).send({ ...response });
     })
     .catch(error => {

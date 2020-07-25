@@ -11,9 +11,9 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-goog.exportSymbol('proto.HealthCheckUpRequest', null, global);
 goog.exportSymbol('proto.PrintRequest', null, global);
 goog.exportSymbol('proto.PrintResponse', null, global);
+goog.exportSymbol('proto.PrinterHealthCheckUpRequest', null, global);
 goog.exportSymbol('proto.PrinterHealthStatus', null, global);
 
 /**
@@ -417,12 +417,12 @@ proto.PrintResponse.prototype.setMessage = function(value) {
  * @extends {jspb.Message}
  * @constructor
  */
-proto.HealthCheckUpRequest = function(opt_data) {
+proto.PrinterHealthCheckUpRequest = function(opt_data) {
   jspb.Message.initialize(this, opt_data, 0, -1, null, null);
 };
-goog.inherits(proto.HealthCheckUpRequest, jspb.Message);
+goog.inherits(proto.PrinterHealthCheckUpRequest, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
-  proto.HealthCheckUpRequest.displayName = 'proto.HealthCheckUpRequest';
+  proto.PrinterHealthCheckUpRequest.displayName = 'proto.PrinterHealthCheckUpRequest';
 }
 
 
@@ -437,8 +437,8 @@ if (jspb.Message.GENERATE_TO_OBJECT) {
  *     for transitional soy proto support: http://goto/soy-param-migration
  * @return {!Object}
  */
-proto.HealthCheckUpRequest.prototype.toObject = function(opt_includeInstance) {
-  return proto.HealthCheckUpRequest.toObject(opt_includeInstance, this);
+proto.PrinterHealthCheckUpRequest.prototype.toObject = function(opt_includeInstance) {
+  return proto.PrinterHealthCheckUpRequest.toObject(opt_includeInstance, this);
 };
 
 
@@ -447,11 +447,11 @@ proto.HealthCheckUpRequest.prototype.toObject = function(opt_includeInstance) {
  * @param {boolean|undefined} includeInstance Whether to include the JSPB
  *     instance for transitional soy proto support:
  *     http://goto/soy-param-migration
- * @param {!proto.HealthCheckUpRequest} msg The msg instance to transform.
+ * @param {!proto.PrinterHealthCheckUpRequest} msg The msg instance to transform.
  * @return {!Object}
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.HealthCheckUpRequest.toObject = function(includeInstance, msg) {
+proto.PrinterHealthCheckUpRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
     memberName: jspb.Message.getFieldWithDefault(msg, 1, "")
   };
@@ -467,23 +467,23 @@ proto.HealthCheckUpRequest.toObject = function(includeInstance, msg) {
 /**
  * Deserializes binary data (in protobuf wire format).
  * @param {jspb.ByteSource} bytes The bytes to deserialize.
- * @return {!proto.HealthCheckUpRequest}
+ * @return {!proto.PrinterHealthCheckUpRequest}
  */
-proto.HealthCheckUpRequest.deserializeBinary = function(bytes) {
+proto.PrinterHealthCheckUpRequest.deserializeBinary = function(bytes) {
   var reader = new jspb.BinaryReader(bytes);
-  var msg = new proto.HealthCheckUpRequest;
-  return proto.HealthCheckUpRequest.deserializeBinaryFromReader(msg, reader);
+  var msg = new proto.PrinterHealthCheckUpRequest;
+  return proto.PrinterHealthCheckUpRequest.deserializeBinaryFromReader(msg, reader);
 };
 
 
 /**
  * Deserializes binary data (in protobuf wire format) from the
  * given reader into the given message object.
- * @param {!proto.HealthCheckUpRequest} msg The message object to deserialize into.
+ * @param {!proto.PrinterHealthCheckUpRequest} msg The message object to deserialize into.
  * @param {!jspb.BinaryReader} reader The BinaryReader to use.
- * @return {!proto.HealthCheckUpRequest}
+ * @return {!proto.PrinterHealthCheckUpRequest}
  */
-proto.HealthCheckUpRequest.deserializeBinaryFromReader = function(msg, reader) {
+proto.PrinterHealthCheckUpRequest.deserializeBinaryFromReader = function(msg, reader) {
   while (reader.nextField()) {
     if (reader.isEndGroup()) {
       break;
@@ -507,9 +507,9 @@ proto.HealthCheckUpRequest.deserializeBinaryFromReader = function(msg, reader) {
  * Serializes the message to binary data (in protobuf wire format).
  * @return {!Uint8Array}
  */
-proto.HealthCheckUpRequest.prototype.serializeBinary = function() {
+proto.PrinterHealthCheckUpRequest.prototype.serializeBinary = function() {
   var writer = new jspb.BinaryWriter();
-  proto.HealthCheckUpRequest.serializeBinaryToWriter(this, writer);
+  proto.PrinterHealthCheckUpRequest.serializeBinaryToWriter(this, writer);
   return writer.getResultBuffer();
 };
 
@@ -517,11 +517,11 @@ proto.HealthCheckUpRequest.prototype.serializeBinary = function() {
 /**
  * Serializes the given message to binary data (in protobuf wire
  * format), writing to the given BinaryWriter.
- * @param {!proto.HealthCheckUpRequest} message
+ * @param {!proto.PrinterHealthCheckUpRequest} message
  * @param {!jspb.BinaryWriter} writer
  * @suppress {unusedLocalVariables} f is only used for nested messages
  */
-proto.HealthCheckUpRequest.serializeBinaryToWriter = function(message, writer) {
+proto.PrinterHealthCheckUpRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
   f = message.getMemberName();
   if (f.length > 0) {
@@ -537,13 +537,13 @@ proto.HealthCheckUpRequest.serializeBinaryToWriter = function(message, writer) {
  * optional string member_name = 1;
  * @return {string}
  */
-proto.HealthCheckUpRequest.prototype.getMemberName = function() {
+proto.PrinterHealthCheckUpRequest.prototype.getMemberName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
 /** @param {string} value */
-proto.HealthCheckUpRequest.prototype.setMemberName = function(value) {
+proto.PrinterHealthCheckUpRequest.prototype.setMemberName = function(value) {
   jspb.Message.setProto3StringField(this, 1, value);
 };
 

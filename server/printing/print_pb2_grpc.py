@@ -20,7 +20,7 @@ class PrinterStub(object):
                 )
         self.HealthCheck = channel.unary_unary(
                 '/Printer/HealthCheck',
-                request_serializer=print__pb2.HealthCheckUpRequest.SerializeToString,
+                request_serializer=print__pb2.PrinterHealthCheckUpRequest.SerializeToString,
                 response_deserializer=print__pb2.PrinterHealthStatus.FromString,
                 )
 
@@ -50,7 +50,7 @@ def add_PrinterServicer_to_server(servicer, server):
             ),
             'HealthCheck': grpc.unary_unary_rpc_method_handler(
                     servicer.HealthCheck,
-                    request_deserializer=print__pb2.HealthCheckUpRequest.FromString,
+                    request_deserializer=print__pb2.PrinterHealthCheckUpRequest.FromString,
                     response_serializer=print__pb2.PrinterHealthStatus.SerializeToString,
             ),
     }
@@ -90,7 +90,7 @@ class Printer(object):
             timeout=None,
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/Printer/HealthCheck',
-            print__pb2.HealthCheckUpRequest.SerializeToString,
+            print__pb2.PrinterHealthCheckUpRequest.SerializeToString,
             print__pb2.PrinterHealthStatus.FromString,
             options, channel_credentials,
             call_credentials, compression, wait_for_ready, timeout, metadata)

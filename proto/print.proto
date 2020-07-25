@@ -1,6 +1,5 @@
 syntax = "proto3";
 
-
 service Printer {
     rpc PrintPage (PrintRequest) returns (PrintResponse);
     rpc HealthCheck (PrinterHealthCheckUpRequest) returns (PrinterHealthStatus);
