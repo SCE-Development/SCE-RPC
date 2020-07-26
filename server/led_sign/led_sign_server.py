@@ -71,13 +71,6 @@ def serve():
     server.wait_for_termination()
     visual = LedSignMock()
 
-    # main (){
-    #     const testRequest = {text: 'i dont think this willwork'};
-
-
-    # }
-
 if __name__ == '__main__':
     logging.basicConfig()
     serve()
-
