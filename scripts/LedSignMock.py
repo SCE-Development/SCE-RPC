@@ -8,9 +8,13 @@ args = parser.parse_args()
 
 class LedSignMock(data):
 <<<<<<< HEAD
+<<<<<<< HEAD
     sign_data = []
 =======
 >>>>>>> Terminal Visual for LED Sign
+=======
+    sign_data = []
+>>>>>>> Fixes Requests
 
     menu = ['   ','SCE LED Sign Visualization ', ' ','Current Text: ', 'Current Brightness: ',' ',
     'Current Scroll Speed:', 'Current Background Color: ', 'Current Font Color:',
@@ -36,12 +40,19 @@ class LedSignMock(data):
             y = height//3 - len(menu)//3 + idx
             stdscr.addstr(y, x, row)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fixes Requests
             if data[3]:
                 print(self.sign_data["text"])
             elif data[4]:
                 print(self.sign_data["brightness"])
             elif data[6]:
+<<<<<<< HEAD
                 print(self.sign_data["scroll-speed"])
+=======
+                print(rself.sign_data["scroll-speed"])
+>>>>>>> Fixes Requests
             elif data[7]:
                 print(self.sign_data["background-color"])
             elif data[8]:
@@ -50,8 +61,11 @@ class LedSignMock(data):
                 print(self.sign_data["border-color"])
             else:
                 break
+<<<<<<< HEAD
 =======
 >>>>>>> Terminal Visual for LED Sign
+=======
+>>>>>>> Fixes Requests
         stdscr.refresh()
 
     def creates_display(self, stdscr):
