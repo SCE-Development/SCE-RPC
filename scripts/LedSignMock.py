@@ -12,6 +12,7 @@ class LedSignMock(data):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     sign_data = []
 =======
 >>>>>>> Terminal Visual for LED Sign
@@ -25,6 +26,9 @@ class LedSignMock(data):
 >>>>>>> Fixes Requests
 =======
 >>>>>>> Terminal Visual for LED Sign
+=======
+    sign_data = []
+>>>>>>> Fixes Requests
 
     menu = ['   ','SCE LED Sign Visualization ', ' ','Current Text: ', 'Current Brightness: ',' ',
     'Current Scroll Speed:', 'Current Background Color: ', 'Current Font Color:',
@@ -54,6 +58,9 @@ class LedSignMock(data):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Fixes Requests
 =======
 >>>>>>> Fixes Requests
 =======
@@ -67,6 +74,7 @@ class LedSignMock(data):
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 print(self.sign_data["scroll-speed"])
 =======
                 print(rself.sign_data["scroll-speed"])
@@ -80,6 +88,9 @@ class LedSignMock(data):
 =======
                 print(self.sign_data["scroll-speed"])
 >>>>>>> Fixes Main
+=======
+                print(rself.sign_data["scroll-speed"])
+>>>>>>> Fixes Requests
             elif data[7]:
                 print(self.sign_data["background-color"])
             elif data[8]:
@@ -90,6 +101,7 @@ class LedSignMock(data):
                 break
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Terminal Visual for LED Sign
 =======
@@ -100,6 +112,8 @@ class LedSignMock(data):
 >>>>>>> Fixes Requests
 =======
 >>>>>>> Terminal Visual for LED Sign
+=======
+>>>>>>> Fixes Requests
         stdscr.refresh()
 
     def creates_display(self, stdscr):
