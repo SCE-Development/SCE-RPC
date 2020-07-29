@@ -8,8 +8,10 @@ const tools = require('../util/tools.js');
 const send3dPrintRequest =
   require('../../client/printing_3d/print_3d_client');
 const sinon = require('sinon');
+const SceApiTester = require('../util/SceApiTester');
 
 let app = null;
+let test = null;
 const expect = chai.expect;
 
 chai.should();
@@ -29,6 +31,7 @@ describe('3DPrinting', () => {
 
   before(done => {
     app = tools.initializeServer(__dirname + '/../../client/api/3DPrinting.js');
+    test = new SceApiTester(app);
     done();
   });
 
@@ -43,32 +46,17 @@ describe('3DPrinting', () => {
   });
 
   describe('/POST print3dModel', () => {
-    it('Should return statuscode 200 when request is completed', done => {
+    it('Should return statuscode 200 when request is completed', async () => {
       send3DPrintRequestMock.resolves(SUCCESS_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/3dPrinter/print3dModel')
-        .send(TEXT_REQUEST)
-        .then(function(res) {
-          expect(res).to.have.status(OK);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
+      const result = await test.sendPostRequest(
+        '/SceRpcApi/3dPrinter/print3dModel', TEXT_REQUEST);
+      expect(result).to.have.status(OK);
     });
-    it('Should return statuscode 400 if the RPC fails', done => {
+    it('Should return statuscode 400 if the RPC fails', async () => {
       send3DPrintRequestMock.rejects(ERROR_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/3dPrinter/print3dModel')
-        .then(function(res) {
-          expect(res).to.have.status(BAD_REQUEST);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
+      const result = await test.sendPostRequest(
+        '/SceRpcApi/3dPrinter/print3dModel', '');
+      expect(result).to.have.status(BAD_REQUEST);
     });
   });
 });

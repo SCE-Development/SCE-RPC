@@ -11,8 +11,11 @@ const LedSignFunctions =
   require('../../client/ledsign/led_sign_client');
 const LoggingFunctions = require('../../client/util/logging-helpers');
 const sinon = require('sinon');
+const SceApiTester = require('../util/SceApiTester');
+const { response } = require('express');
 
 let app = null;
+let test = null;
 const expect = chai.expect;
 
 chai.should();
@@ -68,6 +71,7 @@ describe('LedSign', () => {
 
   before(done => {
     app = tools.initializeServer(__dirname + '/../../client/api/LedSign.js');
+    test = new SceApiTester(app);
     done();
   });
 
@@ -86,20 +90,14 @@ describe('LedSign', () => {
   });
 
   describe('/POST healthCheck', () => {
+    const officer = 'thai';
     let signResponse = null;
-    it('Should return statusCode 200 when the sign is up', done => {
+    it('Should return statusCode 200 when the sign is up', async () => {
       healthCheckMock.resolves(SUCCESS_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/healthCheck')
-        .then(function(res) {
-          signResponse = res.body;
-          expect(res).to.have.status(OK);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
+      const response = await test.sendPostRequest(
+        '/SceRpcApi/LedSign/healthCheck', officer);
+      expect(response).to.have.status(OK);
+      signResponse = response.body;
     });
     it('Should return the correct values when modified', done => {
       healthCheckMock.resolves(SUCCESS_MESSAGE);
@@ -112,65 +110,37 @@ describe('LedSign', () => {
       expect(signResponse.borderColor).to.equal(VALID_SIGN_REQUEST.borderColor);
       done();
     });
-    it('Should return statusCode 404 when the sign is down', done => {
+    it('Should return statusCode 404 when the sign is down', async () => {
       healthCheckMock.resolves(false);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/healthCheck')
-        .then(function(res) {
-          expect(res).to.have.status(NOT_FOUND);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
+      const response = await test.sendPostRequest(
+        '/SceRpcApi/LedSign/healthCheck', officer);
+      expect(response).to.have.status(NOT_FOUND);
     });
   });
 
   describe('/POST updateSignText', () => {
-    it('Should return statusCode 200 when the sign text is updated', done => {
-      addSignLogStub.resolves(SUCCESS_MESSAGE);
-      updateSignTextMock.resolves(SUCCESS_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/updateSignText')
-        .send(VALID_SIGN_REQUEST)
-        .then(function(res) {
-          expect(res).to.have.status(OK);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
-    it('Should return statusCode 404 when the sign is down', done => {
+    it('Should return statusCode 200 when the sign text is updated',
+      async () => {
+        addSignLogStub.resolves(SUCCESS_MESSAGE);
+        updateSignTextMock.resolves(SUCCESS_MESSAGE);
+        const response = await test.sendPostRequest(
+          '/SceRpcApi/LedSign/updateSignText', VALID_SIGN_REQUEST);
+        expect(response).to.have.status(OK);
+      });
+    it('Should return statusCode 404 when the sign is down', async () => {
       addSignLogStub.resolves(SUCCESS_MESSAGE);
       updateSignTextMock.rejects(ERROR_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/updateSignText')
-        .then(function(res) {
-          expect(res).to.have.status(NOT_FOUND);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
+      const response = await test.sendPostRequest(
+        '/SceRpcApi/LedSign/updateSignText', INVALID_SIGN_REQUEST);
+      expect(response).to.have.status(NOT_FOUND);
     });
     it('Should return statuscode 400 when we can\'t log sign activity',
-      done => {
+      async () => {
         addSignLogStub.resolves(ERROR_MESSAGE);
         updateSignTextMock.rejects(ERROR_MESSAGE);
-        chai
-          .request(app)
-          .post('/SceRpcApi/LedSign/updateSignText')
-          .then(function(res) {
-            expect(res).to.have.status(BAD_REQUEST);
-            done();
-          })
-          .catch(err => {
-            throw err;
-          });
+        const response = await test.sendPostRequest(
+          '/SceRpcApi/LedSign/updateSignText', {});
+        expect(response).to.have.status(BAD_REQUEST);
       });
   });
 });
