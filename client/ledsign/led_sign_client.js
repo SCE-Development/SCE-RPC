@@ -67,5 +67,5 @@ function updateSignText(signData, signIp) {
   });
 }
 
-module.exports = { healthCheck, updateSignText };
+// module.exports = { healthCheck, updateSignText };
 
