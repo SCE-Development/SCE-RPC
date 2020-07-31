@@ -8,12 +8,12 @@
         "test": "mocha ./test/client"
     },
     "dependencies": {
-        "@grpc/proto-loader": "^0.5.3",
+        "@grpc/proto-loader": "^0.5.5",
         "axios": "^0.19.2",
         "cors": "^2.8.5",
         "express": "^4.17.1",
-        "google-protobuf": "^3.11.4",
-        "grpc": "^1.24.2",
+        "google-protobuf": "^3.12.4",
+        "grpc": "^1.24.3",
         "http": "0.0.1-security"
     },
     "devDependencies": {

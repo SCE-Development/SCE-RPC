@@ -32,11 +32,12 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
             else:
                 command += "-o " + str(current_option) + "="\
                     + str(options[current_option]) + " "
-        command += "-d " + self.DeterminePrinterForJob(copies) + " "
+        chosenPrinter = self.DeterminePrinterForJob(copies)
+        command += "-d " + chosenPrinter + " "
         command += "tmp.pdf"
         status = os.popen(command)
         os.remove("tmp.pdf")
-        return 'printed' if status else 'error'
+        return chosenPrinter if status else 'error'
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
