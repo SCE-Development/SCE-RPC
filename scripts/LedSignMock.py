@@ -37,7 +37,7 @@ class LedSignMock(data):
             elif data[4]:
                 print(self.sign_data["brightness"])
             elif data[6]:
-                print(rself.sign_data["scroll-speed"])
+                print(self.sign_data["scroll-speed"])
             elif data[7]:
                 print(self.sign_data["background-color"])
             elif data[8]:
