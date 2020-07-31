@@ -67,9 +67,10 @@ function updateSignText(signData, signIp) {
   });
 }
 
-module.exports = { healthCheck, updateSignText };
+// module.exports = { healthCheck, updateSignText };
 
-main(){
+function main(){
+  const signIp = 50052;
   const testRequest = { 
     text: 'i dont think this willwork', 
     brightness: 100, 
@@ -80,3 +81,5 @@ main(){
   }
   updateSignText(testRequest, signIp);
 };
+
+main();
