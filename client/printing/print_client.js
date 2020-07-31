@@ -46,4 +46,11 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
   });
 }
 
-module.exports = { sendPrintRequest, healthCheck };
+function main() {
+  const copies = { copies: 10 };
+  DeterminePrinterForJob(copies);
+};
+
+
+module.exports = { sendPrintRequest };
+
