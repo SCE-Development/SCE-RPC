@@ -47,10 +47,9 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
 }
 
 function main() {
-  const copies = { copies: 10 };
-  DeterminePrinterForJob(copies);
+  sendPrintRequest('raw', 10, 2, 20, 'right printer');
 };
-
 
 module.exports = { sendPrintRequest };
 
+main();
