@@ -17,7 +17,7 @@ function install_rpc(){
     # Activate virtual environment
     source modules/bin/activate
     # Install all requirements within requirements.txt file
-    python3 -m pip install -r ./requirements.txt
+    sudo python3 -m pip install -r ./requirements.txt
     # Deactivate virtual environment
     deactivate
 }
