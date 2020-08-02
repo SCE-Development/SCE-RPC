@@ -7,7 +7,7 @@ parser.add_argument('--mock-output', help="Displays Mock Output", )
 args = parser.parse_args()
 
 
-class SCEPrinter(data):
+class SCEPrinterMock():
     ESCKEY = 27
     left_copies = 0
     right_copies = 0
@@ -17,7 +17,6 @@ class SCEPrinter(data):
         print("2D Mock")
 
     def get_printer(self, printer):
-        printer = data
         self.printer = printer
 
     def add_left_printer_copies(self, count):
@@ -75,8 +74,6 @@ class SCEPrinter(data):
         while exitKey != self.ESCKEY:
             exitKey = screen.getch()
         curses.endwin()
-        mock = SCEPrinter()
-        mock.create_visual()
         exit()
 
-    curses.wrapper(create_visual)
+    # curses.wrapper(create_visual)

@@ -1,5 +1,6 @@
 .vscode/
 __pycache__/
 modules/
+module/
 node_modules
 config.js

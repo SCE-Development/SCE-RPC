@@ -39,16 +39,7 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
         command += "tmp.pdf"
         status = os.popen(command)
         os.remove("tmp.pdf")
-<<<<<<< HEAD
         return chosenPrinter if status else 'error'
-=======
-        printer = self.DeterminePrinterForJob(copies)
-        mock.get_printer(printer)
-        mock.add_left_printer_copies(self.pages[0])
-        mock.add_right_printer_copies(self.pages[1])
-
-        return 'printed' if status else 'error'
->>>>>>> Fixes Implementation of Methods
 
     def PrintPage(self, request, context):
         response = print_pb2.PrintResponse()
