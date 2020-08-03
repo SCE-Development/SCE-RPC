@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+
+service Resume {
+    rpc GenerateResume (ResumeRequest) returns (ResumeResponse);
+}
+
+message ResumeRequest {
+    bytes encoded_file = 1;
+}
+
+message ResumeResponse {
+    bytes file = 1;
+}

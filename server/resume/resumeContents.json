@@ -1,0 +1,82 @@
+{
+  "personal": {
+    "fullName": "Bilbo Baggins",
+    "email": "bilbo.baggins@midearth.com",
+    "phoneNumber": "999.999.9999",
+    "github": "github.com/volcanoLUL"
+  },
+  
+  "education": {
+    "university": "Middle Earth University",
+    "graduationDate": "April 1800 B.C.",
+    "majorAndSchool": "B.S. Throwing Rings | Gandalf College of Throwing Things",
+    "cumulativeGPA": "4.0",
+    "courseWork": "Climbing Volcanos, Stabbing Things, Shotput, Eyeball Dodging"
+  },
+
+  "projects": [
+      {
+        "projectName": "Saved the World",
+        "projectLocation": "Middle Earth",
+        "projectTools": "The Eagles, My LIFE",
+        "projectDate": "April 1800 B.C. - May 1800 B.C.",
+        "projectAccomplishmentOne": "Threw this creepy guys super evil ring into a volcano because it would save all of my friends.",
+        "projectAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+        "projectAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+      },
+      {
+        "projectName": "Saved the World",
+        "projectLocation": "Middle Earth",
+        "projectTools": "The Eagles, My LIFE",
+        "projectDate": "April 1800 B.C. - May 1800 B.C.",
+        "projectAccomplishmentOne": "Threw this creepy guys super evil ring into a volcano because it would save all of my friends.",
+        "projectAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+        "projectAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+      },
+      {
+        "projectName": "Saved the World",
+        "projectLocation": "Middle Earth",
+        "projectTools": "The Eagles, My LIFE",
+        "projectDate": "April 1800 B.C. - May 1800 B.C.",
+        "projectAccomplishmentOne": "Threw this creepy guys super evil ring into a volcano because it would save all of my friends.",
+        "projectAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+        "projectAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+      }
+  ],
+     
+  "experiences": [
+    {
+      "experienceName": "Software & Computer Engineering Society (SCE)",
+      "experienceLocation": "San Jose, CA",
+      "experiencePosition": "Intern",
+      "experienceDate": "June 2020 - Present",
+      "experienceAccomplishmentOne": "Worked on a cool resume generating service that will be used by future club members.",
+      "experienceAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+      "experienceAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+    },
+    {
+      "experienceName": "Software & Computer Engineering Society (SCE)",
+      "experienceLocation": "San Jose, CA",
+      "experiencePosition": "Intern",
+      "experienceDate": "June 2020 - Present",
+      "experienceAccomplishmentOne": "Worked on a cool resume generating service that will be used by future club members.",
+      "experienceAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+      "experienceAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+    },
+    {
+      "experienceName": "Software & Computer Engineering Society (SCE)",
+      "experienceLocation": "San Jose, CA",
+      "experiencePosition": "Intern",
+      "experienceDate": "June 2020 - Present",
+      "experienceAccomplishmentOne": "Worked on a cool resume generating service that will be used by future club members.",
+      "experienceAccomplishmentTwo": "Leveraged the FPDF library to format and generate resume files.",
+      "experienceAccomplishmentThree": "Worked alongside several like-minded peers in pursuit of personal growth and happiness."
+    }
+  ],
+
+  "skills" : {
+    "proficient" : "Java, Javascript, Python",
+    "experienced" : "HTML, CSS, C#, PHP",
+    "familiar" : "C++, React"
+  }
+}
