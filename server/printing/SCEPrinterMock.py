@@ -39,7 +39,6 @@ class SCEPrinterMock():
 
         page = "Total Pages Printed: "
         status = "Status:"
-        print('oh noooooooooooo!!!!!!')
         left_window = screen.derwin(
             20, 50, height-(height-5), (width//2)-50)
         left_window.box()
@@ -47,7 +46,7 @@ class SCEPrinterMock():
         left_window.refresh()
         left_window.addstr(2, 2, "Printer  # 1: HP-LaserJet-p2015dn-left")
         left_window.addstr(4, 2, page)
-        left_window.addstr(4, 4, str(self.left_copies))
+        left_window.addstr(4, 25, str(self.left_copies))
         left_window.addstr(5, 2, status)
 
         right_window = screen.derwin(
@@ -57,7 +56,7 @@ class SCEPrinterMock():
         right_window.refresh()
         right_window.addstr(2, 2, "Printer  # 2: HP-LaserJet-p2015dn-right")
         right_window.addstr(4, 2, page)
-        right_window.addstr(4, 4, str(self.right_copies))
+        right_window.addstr(4, 25, str(self.right_copies))
         right_window.addstr(5, 2, status)
 
         screen.addstr(height-8, title_x-15, "Total Server Uptime: ")
@@ -67,15 +66,16 @@ class SCEPrinterMock():
         screen.addstr(height-3, exit_message_width, exit_message)
 
         screen.refresh()
+        exitKey = screen.getch()
+        while exitKey != self.ESCKEY:
+            exitKey = screen.getch()
 
     def create_visual(self):
         self.visual_components()
         # SURABHI PLEASE FIX
-        import time
-        time.sleep(20)
-        # exitKey = screen.getch()
-        # while exitKey != self.ESCKEY:
-        #     exitKey = screen.getch()
+        # import time
+        # time.sleep(20)
+
         curses.endwin()
         exit()
 
