@@ -38,7 +38,7 @@ class SCEPrinterMock():
                       title, curses.A_BOLD)
 
         page = "Total Pages Printed: "
-        status = "Status:"
+        status = "Status: ???"
         left_window = screen.derwin(
             20, 50, height-(height-5), (width//2)-50)
         left_window.box()
