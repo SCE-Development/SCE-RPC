@@ -1,7 +1,7 @@
 import grpc
 import logging
 from concurrent import futures
-from scripts import LedSignMock 
+from LedSignMock import LedSignMock
 
 import led_sign_pb2
 import led_sign_pb2_grpc
@@ -14,6 +14,8 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
     CURRENT_DIRECTORY = os.path.dirname(os.path.abspath(__file__)) + sep
     proc = None
     sign_data = {}
+    visual = LedSignMock()
+    curses.wrapper(visual.creates_display())
 
     def WriteCommandToSign(self, request):
         command = [
@@ -69,7 +71,6 @@ def serve():
     server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
-    visual = LedSignMock()
 
 if __name__ == '__main__':
     logging.basicConfig()
