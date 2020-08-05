@@ -10,14 +10,19 @@ import SCEPrinter
 
 class PrintServicer(print_pb2_grpc.PrinterServicer):
     # (left printer, right printer)
-    pages = (0, 0)
+    pages = 0
+    printer = ''
+    printer_mock = SCEPrinterMock()
+    printer_mock.create_visual()
 
     def DeterminePrinterForJob(self, copies):
-        if (self.pages[0] > 0):
-            self.pages[0] += copies
+        if self.pages > 0:
+            self.pages += copies
+            self.printer_mock.add_right_printer_copies(copies)
             return "HP-LaserJet-p2015dn-right"
         else:
-            self.pages[1] += copies
+            self.pages -= copies
+            self.printer_mock.add_left_printer_copies(copies)
             return "HP-LaserJet-p2015dn-left"
 
     def SendRequestToPrinter(self, encoded_file, copies=1, options={}):

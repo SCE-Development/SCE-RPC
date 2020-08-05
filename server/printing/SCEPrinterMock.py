@@ -13,7 +13,7 @@ class SCEPrinterMock():
     right_copies = 0
     printer = ''
 
-    def _init_(self, printer):
+    def __init__(self):
         print("2D Mock")
 
     def get_printer(self, printer):
@@ -25,7 +25,7 @@ class SCEPrinterMock():
     def add_right_printer_copies(self, count):
         self.right_copies += count
 
-    def visual_components(self, screen):
+    def visual_components(self):
         screen = curses.initscr()
         height, width = screen.getmaxyx()
         screen.border(0)
@@ -39,6 +39,7 @@ class SCEPrinterMock():
 
         page = "Total Pages Printed: "
         status = "Status:"
+        print('oh noooooooooooo!!!!!!')
         left_window = screen.derwin(
             20, 50, height-(height-5), (width//2)-50)
         left_window.box()
@@ -46,7 +47,7 @@ class SCEPrinterMock():
         left_window.refresh()
         left_window.addstr(2, 2, "Printer  # 1: HP-LaserJet-p2015dn-left")
         left_window.addstr(4, 2, page)
-        left_window.addstr(4, 4, left_copies)
+        left_window.addstr(4, 4, str(self.left_copies))
         left_window.addstr(5, 2, status)
 
         right_window = screen.derwin(
@@ -56,7 +57,7 @@ class SCEPrinterMock():
         right_window.refresh()
         right_window.addstr(2, 2, "Printer  # 2: HP-LaserJet-p2015dn-right")
         right_window.addstr(4, 2, page)
-        right_window.addstr(4, 4, right_copies)
+        right_window.addstr(4, 4, str(self.right_copies))
         right_window.addstr(5, 2, status)
 
         screen.addstr(height-8, title_x-15, "Total Server Uptime: ")
@@ -68,11 +69,13 @@ class SCEPrinterMock():
         screen.refresh()
 
     def create_visual(self):
-        curses.curs_set(0)
-        self.visual_components(screen)
-        exitKey = screen.getch()
-        while exitKey != self.ESCKEY:
-            exitKey = screen.getch()
+        self.visual_components()
+        # SURABHI PLEASE FIX
+        import time
+        time.sleep(20)
+        # exitKey = screen.getch()
+        # while exitKey != self.ESCKEY:
+        #     exitKey = screen.getch()
         curses.endwin()
         exit()
 
