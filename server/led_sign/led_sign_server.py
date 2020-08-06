@@ -37,13 +37,15 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         self.sign_data["background-color"] = request.background_color
         self.sign_data["font-color"] = request.text_color
         self.sign_data["border-color"] = request.border_color
-
-        visual.update_sign_visual(self.sign_data);
+        print(self.sign_data["text"])
+        self.visual.getSignText(self.sign_data["text"])
+        self.visual.update_sign_visual(self.sign_data);
     
         if self.proc != None:
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
+        # self.visual.creates_display()
 
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignMessage()
