@@ -22,6 +22,9 @@ class LedSignMock():
     'Current Border Color: ' ]
     ESCKEY = 27
 
+    def getSignText(self, text):
+        print(text)
+
     def update_sign_visual(self, request):
         self.sign_data["text"] = request["text"]
         self.sign_data["brightness"] = str(request["brightness"])
