@@ -15,7 +15,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
     proc = None
     sign_data = {}
     visual = LedSignMock()
-    curses.wrapper(visual.creates_display())
+    # curses.wrapper(visual.creates_display())
 
     def WriteCommandToSign(self, request):
         command = [
@@ -41,7 +41,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
-        # self.visual.creates_display()
+        
 
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignMessage()
