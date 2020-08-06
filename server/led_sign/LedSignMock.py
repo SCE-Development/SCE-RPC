@@ -7,7 +7,7 @@ args = parser.parse_args()
 
 class LedSignMock():
     sign_data = {
-        "text": 'beans',
+        "text": '',
         "brightness": '',
         "scroll-speed": '',
         "background-color": '',
@@ -20,13 +20,18 @@ class LedSignMock():
     'Current Border Color: ' ]
     ESCKEY = 27
 
+    def getSignText(self, text):
+        print(text)
+
     def update_sign_visual(self, request):
-        self.sign_data["text"] = request.text
-        self.sign_data["brightness"] = request.brightness
-        self.sign_data["scroll-speed"] = request.scroll_speed
-        self.sign_data["background-color"] = request.background_color
-        self.sign_data["font-color"] = request.text_color
-        self.sign_data["border-color"] = request.border_color
+        self.sign_data["text"] = request["text"]
+        print(self.sign_data["text"], 'ok cool')
+        print('surabhi is a genius')
+        self.sign_data["brightness"] = request["brightness"]
+        self.sign_data["scroll-speed"] = request["scroll_speed"]
+        self.sign_data["background-color"] = request["background_color"]
+        self.sign_data["font-color"] = request["text_color"]
+        self.sign_data["border-color"] = request["border_color"]
 
     def print_menu(self, selected_row_idx):
         screen = curses.initscr()
@@ -40,17 +45,17 @@ class LedSignMock():
             y = height//3 - len(self.menu)//3 + idx
             screen.addstr(y, x, row)
             if idx == 3:
-                screen.addstr(y ,x,self.sign_data["text"])
+                screen.addstr(y ,x +25, self.sign_data["text"])
             elif idx == 4:
-                screen.addstr(y + 5,x,self.sign_data["brightness"])
+                screen.addstr(y,x+25,self.sign_data["brightness"])
             elif idx == 6:
-                screen.addstr(y +5 ,x,self.sign_data["scroll-speed"])
+                screen.addstr(y ,x +25,self.sign_data["scroll-speed"])
             elif idx == 7:
-                screen.addstr(y +5,x,self.sign_data["background-color"])
+                screen.addstr(y,x +25,self.sign_data["background-color"])
             elif idx == 8:
-                screen.addstr(y,x,self.sign_data["font-color"])
+                screen.addstr(y,x +25,self.sign_data["font-color"])
             elif idx == 9:
-                screen.addstr(y,x,self.sign_data["border-color"])
+                screen.addstr(y,x +25,self.sign_data["border-color"])
         screen.refresh()
 
     def creates_display(self):
@@ -64,4 +69,5 @@ class LedSignMock():
         curses.endwin()
         exit()
         self.print_menu(current_row)
+        print("updates mock")
 
