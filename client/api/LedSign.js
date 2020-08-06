@@ -69,4 +69,34 @@ router.post('/LedSign/clearMessageQueue', (req, res) => {
     });
 });
 
+router.get('/LedSign/getSignMessages', (req, res) => {
+  const fakeMessages = [
+    {
+      text: 'Big Oof',
+      brightness: 50,
+      scrollSpeed: 50,
+      backgroundColor: '#00FF00',
+      textColor: '#FF0000',
+      borderColor: '#0000FF'
+    },
+    {
+      text: 'kzv',
+      brightness: 50,
+      scrollSpeed: 50,
+      backgroundColor: '#00FF00',
+      textColor: '#FF0000',
+      borderColor: '#0000FF'
+    },
+    {
+      text: 'shoutout taline taline rules',
+      brightness: 50,
+      scrollSpeed: 50,
+      backgroundColor: '#00FF00',
+      textColor: '#FF0000',
+      borderColor: '#0000FF'
+    }
+  ];
+  return res.status(OK).send(fakeMessages);
+});
+
 module.exports = router;
