@@ -30,6 +30,32 @@ function healthCheck(officerName, signIp) {
 }
 
 /**
+ * This function deletes a certain message from the array of messages
+ * being displayed on the sign.
+ * @param {string} deleteIndex Index of the message you want to delete
+ * @param {string} signIp - The IP address of the sign.
+ * @returns {Promise} Promise object which will contain the message from the
+ * sign and if an error occurred.
+ */
+function deleteMessageFromQueue(deleteMessage, signIp) {
+  const client = new services.LedSignClient(
+    `${signIp}:50052`,
+    grpc.credentials.createInsecure()
+  );
+  const deleteMessageRequest = new messages.LedSignMessage();
+  deleteMessageRequest.setMessage(deleteMessage);
+  return new Promise(function(resolve, reject) {
+    client.deleteMessageFromQueue(deleteMessageRequest, function(err, response) {
+      if (err || !response) {
+        reject({ message: 'Sign is down', error: true });
+      } else {
+        resolve({ message: response, error: false });
+      }
+    });
+  });
+}
+
+/**
  * This function updates the text of the sign in the SCE club room.
  * @param {Object} signData An object containing all of the information to
  * update the sign with.
@@ -47,7 +73,7 @@ function healthCheck(officerName, signIp) {
  * @returns {Promise} Promise object which will contain the message from the
  * sign and if an error occurred.
  */
-function updateSignText(signData, signIp) {
+function addMessageToQueue(signData, signIp) {
   const client = new services.LedSignClient(
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
@@ -60,41 +86,8 @@ function updateSignText(signData, signIp) {
   textRequest.setTextColor(signData.textColor);
   textRequest.setBorderColor(signData.borderColor);
   return new Promise(function(resolve, reject) {
-    client.updateSignText(textRequest, function(err, response) {
+    client.addMessageToQueue(textRequest, function(err, response) {
       if (err) reject({ message: 'Update failed', error: true });
-      resolve({ message: response, error: false });
-    });
-  });
-}
-
-/**
- * This function adds the text of a message to a queue of messages to be
- * displayed on the LED sign.
- * @param {Object} signMessage - An object containing the desired message a user
- * wants to send to a sign.
- * @param {string} signIp - The IP address of the sign.
- * @returns {Promise} Promise object which will contain the message from the
- * sign and if an error occurred.
- */
-function addMessageToQueue(signMessage, signIp) {
-  const client = new services.LedSignClient(
-    `${signIp}:50052`,
-    grpc.credentials.createInsecure()
-  );
-
-  const signMessageRequest = new messages.LedSignRecord();
-
-  signMessageRequest.setText(signMessage.text);
-  signMessageRequest.setBrightness(signMessage.brightness);
-  signMessageRequest.setScrollSpeed(signMessage.scrollSpeed);
-  signMessageRequest.setBackgroundColor(signMessage.backgroundColor);
-  signMessageRequest.setTextColor(signMessage.textColor);
-  signMessageRequest.setBorderColor(signMessage.borderColor);
-  signMessageRequest.setMessage(signMessage);
-
-  return new Promise(function(resolve, reject) {
-    client.addMessageToQueue(signMessageRequest, function(err, response) {
-      if (err) reject({ message: 'Message not added to queue', error: true });
       resolve({ message: response, error: false });
     });
   });
@@ -113,10 +106,8 @@ function clearMessageQueue(signMessage, signIp) {
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
   );
-
   const clearMessageRequest = new messages.LedSignMessage();
   clearMessageRequest.setMessage(signMessage);
-
   return new Promise(function(resolve, reject) {
     client.clearMessageQueue(clearMessageRequest, function(err, response) {
       if (err) reject({ message: 'Message queue not cleared', error: true });
@@ -127,7 +118,7 @@ function clearMessageQueue(signMessage, signIp) {
 
 module.exports = {
   healthCheck,
-  updateSignText,
   addMessageToQueue,
-  clearMessageQueue
+  clearMessageQueue,
+  deleteMessageFromQueue
 };

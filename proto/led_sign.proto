@@ -2,10 +2,10 @@ syntax = "proto3";
 
 
 service LedSign {
-  rpc HealthCheck (LedSignMessage) returns (LedSignRecord);
-  rpc UpdateSignText (LedSignRecord) returns (LedSignMessage);
+  rpc HealthCheck (LedSignMessage) returns (HealthCheckResponse);
   rpc AddMessageToQueue (LedSignRecord) returns (LedSignMessage);
   rpc ClearMessageQueue (LedSignMessage) returns (LedSignMessage);
+  rpc DeleteMessageFromQueue (LedSignMessage) returns (LedSignMessage);
 }
 
 message LedSignMessage{
@@ -20,4 +20,8 @@ message LedSignRecord{
   string text_color = 5;
   string border_color = 6;
   string message = 7;
+}
+
+message HealthCheckResponse{
+  repeated LedSignRecord messages = 1;
 }
