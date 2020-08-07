@@ -1,25 +1,35 @@
 import curses
-import argparse 
+import argparse
 
 parser = argparse.ArgumentParser(description="Prints mock output.")
-parser.add_argument('--mock-output', help = "Displays Mock Output", )
+parser.add_argument("--mock-output", help="Displays Mock Output")
 args = parser.parse_args()
 
-class LedSignMock():
+
+class LedSignMock:
     sign_data = {
-        "text": '',
-        "brightness": '',
-        "scroll-speed": '',
-        "background-color": '',
-        "font-color": '',
-        "border-color":''
+        "text": "",
+        "brightness": "",
+        "scroll-speed": "",
+        "background-color": "",
+        "font-color": "",
+        "border-color": "",
     }
 
     screen = curses.initscr()
 
-    menu = ['   ','SCE LED Sign Visualization ', ' ','Current Text: ', 'Current Brightness: ',' ',
-    'Current Scroll Speed:', 'Current Background Color: ', 'Current Font Color:',
-    'Current Border Color: ' ]
+    menu = [
+        "   ",
+        "SCE LED Sign Visual",
+        " ",
+        "Current Text: ",
+        "Current Brightness: ",
+        " ",
+        "Current Scroll Speed:",
+        "Current Background Color: ",
+        "Current Font Color:",
+        "Current Border Color: ",
+    ]
     ESCKEY = 27
 
     def update_sign_visual(self, request):
@@ -36,23 +46,28 @@ class LedSignMock():
         self.screen.clear()
         self.screen.border(0)
         height, width = self.screen.getmaxyx()
-        for idx, row in enumerate(self.menu): #iterates over different menu options and aligns it
-            x = width//3 - len(self.menu) 
-            #calculates the location of the words (division changed by # of things in self.menu)
-            y = height//3 - len(self.menu)//3 + idx
+        for idx, row in enumerate(
+            self.menu
+        ):  # iterates over different menu options and aligns it
+            x = width // 3 - len(self.menu)
+            # calculates the location of the words
+            # (division changed by # of things in self.menu)
+            y = height // 3 - len(self.menu) // 3 + idx
             self.screen.addstr(y, x, row)
             if idx == 3:
-                self.screen.addstr(y ,x +25, self.sign_data["text"])
+                self.screen.addstr(y, x + 25, self.sign_data["text"])
             elif idx == 4:
-                self.screen.addstr(y,x+25,self.sign_data["brightness"])
+                self.screen.addstr(y, x + 25, self.sign_data["brightness"])
             elif idx == 6:
-                self.screen.addstr(y ,x +25,self.sign_data["scroll-speed"])
+                self.screen.addstr(y, x + 25, self.sign_data["scroll-speed"])
             elif idx == 7:
-                self.screen.addstr(y,x +25,self.sign_data["background-color"])
+                self.screen.addstr(
+                    y, x + 25, self.sign_data["background-color"]
+                )
             elif idx == 8:
-                self.screen.addstr(y,x +25,self.sign_data["font-color"])
+                self.screen.addstr(y, x + 25, self.sign_data["font-color"])
             elif idx == 9:
-                self.screen.addstr(y,x +25,self.sign_data["border-color"])
+                self.screen.addstr(y, x + 25, self.sign_data["border-color"])
         self.screen.refresh()
 
     def creates_display(self):

@@ -14,15 +14,15 @@ class PrinterStub(object):
             channel: A grpc.Channel.
         """
         self.PrintPage = channel.unary_unary(
-                '/Printer/PrintPage',
-                request_serializer=print__pb2.PrintRequest.SerializeToString,
-                response_deserializer=print__pb2.PrintResponse.FromString,
-                )
+            "/Printer/PrintPage",
+            request_serializer=print__pb2.PrintRequest.SerializeToString,
+            response_deserializer=print__pb2.PrintResponse.FromString,
+        )
         self.HealthCheck = channel.unary_unary(
-                '/Printer/HealthCheck',
-                request_serializer=print__pb2.HealthCheckUpRequest.SerializeToString,
-                response_deserializer=print__pb2.PrinterHealthStatus.FromString,
-                )
+            "/Printer/HealthCheck",
+            request_serializer=print__pb2.HealthCheckUpRequest.SerializeToString,
+            response_deserializer=print__pb2.PrinterHealthStatus.FromString,
+        )
 
 
 class PrinterServicer(object):
@@ -31,66 +31,89 @@ class PrinterServicer(object):
     def PrintPage(self, request, context):
         """Missing associated documentation comment in .proto file"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
     def HealthCheck(self, request, context):
         """Missing associated documentation comment in .proto file"""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
+        context.set_details("Method not implemented!")
+        raise NotImplementedError("Method not implemented!")
 
 
 def add_PrinterServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'PrintPage': grpc.unary_unary_rpc_method_handler(
-                    servicer.PrintPage,
-                    request_deserializer=print__pb2.PrintRequest.FromString,
-                    response_serializer=print__pb2.PrintResponse.SerializeToString,
-            ),
-            'HealthCheck': grpc.unary_unary_rpc_method_handler(
-                    servicer.HealthCheck,
-                    request_deserializer=print__pb2.HealthCheckUpRequest.FromString,
-                    response_serializer=print__pb2.PrinterHealthStatus.SerializeToString,
-            ),
+        "PrintPage": grpc.unary_unary_rpc_method_handler(
+            servicer.PrintPage,
+            request_deserializer=print__pb2.PrintRequest.FromString,
+            response_serializer=print__pb2.PrintResponse.SerializeToString,
+        ),
+        "HealthCheck": grpc.unary_unary_rpc_method_handler(
+            servicer.HealthCheck,
+            request_deserializer=print__pb2.HealthCheckUpRequest.FromString,
+            response_serializer=print__pb2.PrinterHealthStatus.SerializeToString,
+        ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'Printer', rpc_method_handlers)
+        "Printer", rpc_method_handlers
+    )
     server.add_generic_rpc_handlers((generic_handler,))
 
 
- # This class is part of an EXPERIMENTAL API.
+# This class is part of an EXPERIMENTAL API.
 class Printer(object):
     """Missing associated documentation comment in .proto file"""
 
     @staticmethod
-    def PrintPage(request,
+    def PrintPage(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Printer/PrintPage',
+            "/Printer/PrintPage",
             print__pb2.PrintRequest.SerializeToString,
             print__pb2.PrintResponse.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
 
     @staticmethod
-    def HealthCheck(request,
+    def HealthCheck(
+        request,
+        target,
+        options=(),
+        channel_credentials=None,
+        call_credentials=None,
+        compression=None,
+        wait_for_ready=None,
+        timeout=None,
+        metadata=None,
+    ):
+        return grpc.experimental.unary_unary(
+            request,
             target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/Printer/HealthCheck',
+            "/Printer/HealthCheck",
             print__pb2.HealthCheckUpRequest.SerializeToString,
             print__pb2.PrinterHealthStatus.FromString,
-            options, channel_credentials,
-            call_credentials, compression, wait_for_ready, timeout, metadata)
+            options,
+            channel_credentials,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+        )
