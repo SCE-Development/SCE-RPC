@@ -4,6 +4,8 @@ node_js:
 install:
   - cp client/config/config.example.js client/config/config.js
   - npm install
+  - python -m pip install flake8
 script:
  - npm run lint
  - npm run test
+ - flake8
