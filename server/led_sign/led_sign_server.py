@@ -1,6 +1,5 @@
 import grpc
 import logging
-import concurrent
 from concurrent import futures
 
 import led_sign_pb2
@@ -24,7 +23,8 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
                 "--set-background-color", request.background_color[1:],
                 "--set-font-color", request.text_color[1:],
                 "--set-border-color", request.border_color[1:],
-                "--set-font-filename", self.CURRENT_DIRECTORY + "fonts/9x18B.bdf",
+                "--set-font-filename", self.CURRENT_DIRECTORY +
+                "fonts/9x18B.bdf",
             ]
         print(command)
         self.sign_data["text"] = request.text
@@ -33,12 +33,12 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         self.sign_data["background-color"] = request.background_color
         self.sign_data["font-color"] = request.text_color
         self.sign_data["border-color"] = request.border_color
-    
-        if self.proc != None:
+
+        if self.proc is not None:
             self.proc.kill()
 
         self.proc = subprocess.Popen(command)
-        
+
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignMessage()
         response.message = 'hello from pi'
@@ -59,6 +59,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         response.message = "hello from pi"
         print('we got something!')
         return response
+
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
