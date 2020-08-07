@@ -45,11 +45,4 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     });
   });
 }
-
-// function main() {
-//   sendPrintRequest('raw', 10, 2, 20, 'right printer');
-// };
-
 module.exports = { sendPrintRequest };
-
-//main();

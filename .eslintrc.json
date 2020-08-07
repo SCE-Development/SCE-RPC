@@ -21,49 +21,57 @@
             "error",
             "always"
         ],
-    "camelcase": 2,
-    "max-len": [
-        2,
-        {
-            "code": 80
-        }
-    ],
-    "comma-spacing": "error",
-    "no-empty": [
-        "error",
-        {
-            "allowEmptyCatch": true
-        }
-    ],
-    "no-extra-semi": "error",
-    "eol-last": 2,
-    "space-before-function-paren": ["error", {
-        "anonymous": "never",
-        "named": "never",
-        "asyncArrow": "always"
-    }],
-    "no-warning-comments": [
-        2,
-        {
-            "terms": [
-                "todo",
-                "fixme",
-                "any other term"
-            ],
-            "location": "anywhere"
-        }
-    ],
-    "spaced-comment": [
-        2,
-        "always",
-        {
-            "markers": [
-                "/"
-            ]
-        }
-    ],
-    "no-var": 2,
-    "no-trailing-spaces": "error",
-    "brace-style": "error"
+        "camelcase": 2,
+        "max-len": [
+            2,
+            {
+                "code": 80
+            }
+        ],
+        "comma-spacing": "error",
+        "no-empty": [
+            "error",
+            {
+                "allowEmptyCatch": true
+            }
+        ],
+        "no-extra-semi": "error",
+        "eol-last": 2,
+        // "space-before-function-paren": ["error", {
+        //     "anonymous": "never",
+        //     "named": "never",
+        //     "asyncArrow": "always"
+        // }],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "ignore",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ],
+        "no-warning-comments": [
+            2,
+            {
+                "terms": [
+                    "todo",
+                    "fixme",
+                    "any other term"
+                ],
+                "location": "anywhere"
+            }
+        ],
+        "spaced-comment": [
+            2,
+            "always",
+            {
+                "markers": [
+                    "/"
+                ]
+            }
+        ],
+        "no-var": 2,
+        "no-trailing-spaces": "error",
+        "brace-style": "error"
     }
 }
