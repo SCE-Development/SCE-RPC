@@ -22,13 +22,8 @@ class LedSignMock():
     'Current Border Color: ' ]
     ESCKEY = 27
 
-    def getSignText(self, text):
-        print(text)
-
     def update_sign_visual(self, request):
         self.sign_data["text"] = request["text"]
-        print(self.sign_data["text"], 'ok cool')
-        print('surabhi is a genius')
         self.sign_data["brightness"] = str(request["brightness"])
         self.sign_data["scroll-speed"] = str(request["scroll-speed"])
         self.sign_data["background-color"] = request["background-color"]
@@ -40,7 +35,6 @@ class LedSignMock():
     def print_menu(self, selected_row_idx):
         self.screen.clear()
         self.screen.border(0)
-        # print(self.sign_data["text"], 'print')
         height, width = self.screen.getmaxyx()
         for idx, row in enumerate(self.menu): #iterates over different menu options and aligns it
             x = width//3 - len(self.menu) 
@@ -70,6 +64,3 @@ class LedSignMock():
             checkKey = self.screen.getch()
         curses.endwin()
         exit()
-        # self.print_menu(current_row)
-        # print("updates mock")
-

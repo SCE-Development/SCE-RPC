@@ -15,7 +15,6 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
     proc = None
     sign_data = {}
     visual = LedSignMock()
-    # curses.wrapper(visual.creates_display())
 
     def WriteCommandToSign(self, request):
         command = [
