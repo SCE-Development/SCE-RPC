@@ -1,20 +1,20 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
 const {
   healthCheck,
   addMessageToQueue,
   clearMessageQueue,
   deleteMessageFromQueue
-} = require("../ledsign/led_sign_client");
-const { OK, BAD_REQUEST, NOT_FOUND, LED_SIGN_IP } = require("../config/config");
-const { addSignLog } = require("../util/logging-helpers");
+} = require('../ledsign/led_sign_client');
+const { OK, BAD_REQUEST, NOT_FOUND, LED_SIGN_IP } = require('../config/config');
+const { addSignLog } = require('../util/logging-helpers');
 
-router.post("/LedSign/healthCheck", (req, res) => {
+router.post('/LedSign/healthCheck', (req, res) => {
   const { officerName } = req.body;
   healthCheck(officerName, LED_SIGN_IP)
     .then(response => {
-      const { messages } = response;
-      const messageList = response.message.getMessagesList();
+      const { message } = response.messages;
+      const messageList = message.getMessagesList();
       return res.status(OK).send(
         messageList.map(msg => ({
           text: msg.getText(),
@@ -32,7 +32,7 @@ router.post("/LedSign/healthCheck", (req, res) => {
     });
 });
 
-router.post("/LedSign/deleteMessageFromQueue", (req, res) => {
+router.post('/LedSign/deleteMessageFromQueue', (req, res) => {
   const { deleteMessage } = req.body;
   deleteMessageFromQueue(deleteMessage, LED_SIGN_IP)
     .then(response => {
@@ -44,7 +44,7 @@ router.post("/LedSign/deleteMessageFromQueue", (req, res) => {
     });
 });
 
-router.post("/LedSign/addMessageToQueue", async (req, res) => {
+router.post('/LedSign/addMessageToQueue', async (req, res) => {
   if (!await addSignLog(req.body)) {
     return res.sendStatus(BAD_REQUEST);
   }
@@ -59,7 +59,7 @@ router.post("/LedSign/addMessageToQueue", async (req, res) => {
 });
 
 
-router.post("/LedSign/clearMessageQueue", (req, res) => {
+router.post('/LedSign/clearMessageQueue', (req, res) => {
   clearMessageQueue(LED_SIGN_IP)
     .then(response => {
       return res.status(OK).send({ ...response });

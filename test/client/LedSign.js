@@ -65,7 +65,6 @@ const SUCCESS_MESSAGE = {
 
 describe('LedSign', () => {
   const healthCheckMock = sinon.stub(LedSignFunctions, 'healthCheck');
-  const updateSignTextMock = sinon.stub(LedSignFunctions, 'updateSignText');
   const addMessageToQueueMock = sinon.stub(
     LedSignFunctions,
     'addMessageToQueue'
@@ -85,7 +84,6 @@ describe('LedSign', () => {
   after(done => {
     addSignLogStub.restore();
     healthCheckMock.restore();
-    updateSignTextMock.restore();
     addMessageToQueueMock.restore();
     clearMessageQueueMock.restore();
     sinon.restore();
@@ -95,7 +93,6 @@ describe('LedSign', () => {
 
   afterEach(() => {
     healthCheckMock.reset();
-    updateSignTextMock.reset();
     addMessageToQueueMock.reset();
     clearMessageQueueMock.reset();
   });
@@ -106,87 +103,72 @@ describe('LedSign', () => {
     it('Should return statusCode 200 when the sign is up', async () => {
       healthCheckMock.resolves(SUCCESS_MESSAGE);
       const response = await test.sendPostRequest(
-        '/SceRpcApi/LedSign/healthCheck', officer);
+        '/SceRpcApi/LedSign/healthCheck',
+        officer
+      );
       expect(response).to.have.status(OK);
       signResponse = response.body;
     });
     it('Should return the correct values when modified', done => {
       healthCheckMock.resolves(SUCCESS_MESSAGE);
-      expect(signResponse.text).to.equal(VALID_SIGN_REQUEST.text);
-      expect(signResponse.brightness).to.equal(VALID_SIGN_REQUEST.brightness);
-      expect(signResponse.scrollSpeed).to.equal(VALID_SIGN_REQUEST.scrollSpeed);
-      expect(signResponse.backgroundColor).to.equal(
-        VALID_SIGN_REQUEST.backgroundColor
-      );
-      expect(signResponse.textColor).to.equal(VALID_SIGN_REQUEST.textColor);
-      expect(signResponse.borderColor).to.equal(VALID_SIGN_REQUEST.borderColor);
+      if(signResponse) {
+        signResponse.forEach(msg => {
+          expect(msg.text).to.equal(VALID_SIGN_REQUEST.text);
+          expect(msg.brightness).to.equal(VALID_SIGN_REQUEST.brightness);
+          expect(msg.scrollSpeed).to.equal(
+            VALID_SIGN_REQUEST.scrollSpeed
+          );
+          expect(msg.backgroundColor).to.equal(
+            VALID_SIGN_REQUEST.backgroundColor
+          );
+          expect(msg.textColor).to.equal(VALID_SIGN_REQUEST.textColor);
+          expect(msg.borderColor).to.equal(
+            VALID_SIGN_REQUEST.borderColor
+          );
+        });
+      }
       done();
     });
     it('Should return statusCode 404 when the sign is down', async () => {
       healthCheckMock.resolves(false);
       const response = await test.sendPostRequest(
-        '/SceRpcApi/LedSign/healthCheck', officer);
+        '/SceRpcApi/LedSign/healthCheck',
+        officer
+      );
       expect(response).to.have.status(NOT_FOUND);
     });
   });
 
-  describe('/POST updateSignText', () => {
+  describe('/POST addMessageToQueue', () => {
     it('Should return statusCode 200 when the sign text is updated',
       async () => {
         addSignLogStub.resolves(SUCCESS_MESSAGE);
-        updateSignTextMock.resolves(SUCCESS_MESSAGE);
+        addMessageToQueueMock.resolves(SUCCESS_MESSAGE);
         const response = await test.sendPostRequest(
-          '/SceRpcApi/LedSign/updateSignText', VALID_SIGN_REQUEST);
+          '/SceRpcApi/LedSign/addMessageToQueue',
+          VALID_SIGN_REQUEST
+        );
         expect(response).to.have.status(OK);
       });
     it('Should return statusCode 404 when the sign is down', async () => {
       addSignLogStub.resolves(SUCCESS_MESSAGE);
-      updateSignTextMock.rejects(ERROR_MESSAGE);
+      addMessageToQueueMock.rejects(ERROR_MESSAGE);
       const response = await test.sendPostRequest(
-        '/SceRpcApi/LedSign/updateSignText', INVALID_SIGN_REQUEST);
+        '/SceRpcApi/LedSign/addMessageToQueue',
+        INVALID_SIGN_REQUEST
+      );
       expect(response).to.have.status(NOT_FOUND);
     });
     it('Should return statuscode 400 when we can\'t log sign activity',
       async () => {
         addSignLogStub.resolves(ERROR_MESSAGE);
-        updateSignTextMock.rejects(ERROR_MESSAGE);
+        addMessageToQueueMock.rejects(ERROR_MESSAGE);
         const response = await test.sendPostRequest(
-          '/SceRpcApi/LedSign/updateSignText', {});
+          '/SceRpcApi/LedSign/addMessageToQueue',
+          {}
+        );
         expect(response).to.have.status(BAD_REQUEST);
       });
-  });
-
-  describe('/POST addMessageToQueue', () => {
-    let signResponse = null;
-    it('Should return statusCode 200 when message is added to queue', done => {
-      addSignLogStub.resolves(SUCCESS_MESSAGE);
-      addMessageToQueueMock.resolves(SUCCESS_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/addMessageToQueue')
-        .send(VALID_SIGN_REQUEST)
-        .then(function(res) {
-          expect(res).to.have.status(OK);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
-    it('Should return statusCode 404 when the sign is down', done => {
-      addSignLogStub.resolves(SUCCESS_MESSAGE);
-      addMessageToQueueMock.rejects(ERROR_MESSAGE);
-      chai
-        .request(app)
-        .post('/SceRpcApi/LedSign/addMessageToQueue')
-        .then(function(res) {
-          expect(res).to.have.status(NOT_FOUND);
-          done();
-        })
-        .catch(err => {
-          throw err;
-        });
-    });
   });
 
   describe('/POST clearMessageQueue', () => {

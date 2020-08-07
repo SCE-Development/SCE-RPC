@@ -50,7 +50,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
                 if self.proc != None:
                     self.proc.kill()
                 index = 0
-            time.sleep(3)
+            time.sleep(30)
         
     def ClearMessageQueue(self):
         self.message_queue.clear()

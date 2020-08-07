@@ -45,13 +45,14 @@ function deleteMessageFromQueue(deleteMessage, signIp) {
   const deleteMessageRequest = new messages.LedSignMessage();
   deleteMessageRequest.setMessage(deleteMessage);
   return new Promise(function(resolve, reject) {
-    client.deleteMessageFromQueue(deleteMessageRequest, function(err, response) {
-      if (err || !response) {
-        reject({ message: 'Sign is down', error: true });
-      } else {
-        resolve({ message: response, error: false });
-      }
-    });
+    client.deleteMessageFromQueue(deleteMessageRequest,
+      function(err, response) {
+        if (err || !response) {
+          reject({ message: 'Sign is down', error: true });
+        } else {
+          resolve({ message: response, error: false });
+        }
+      });
   });
 }
 
