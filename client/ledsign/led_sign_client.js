@@ -16,7 +16,7 @@ function healthCheck(officerName, signIp) {
     `${signIp}:50052`,
     grpc.credentials.createInsecure()
   );
-  const healthCheckRequest = messages.LedSignRequest();
+  const healthCheckRequest = new messages.LedSignRequest();
   healthCheckRequest.setMessage(officerName);
   return new Promise(function(resolve, reject) {
     client.healthCheck(healthCheckRequest, function(err, response) {
@@ -67,5 +67,4 @@ function updateSignText(signData, signIp) {
   });
 }
 
-// module.exports = { healthCheck, updateSignText };
-
+module.exports = { healthCheck, updateSignText };
