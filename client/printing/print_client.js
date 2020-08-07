@@ -8,8 +8,8 @@ function healthCheck() {
     'localhost:50051', grpc.credentials.createInsecure()
   );
   const healthCheckRequest = new messages.PrintRequest();
-  return new Promise(function(resolve, reject) {
-    client.healthCheck(healthCheckRequest, function(err, response) {
+  return new Promise(function (resolve, reject) {
+    client.healthCheck(healthCheckRequest, function (err, response) {
       if (err || !response) {
         reject({ message: 'Printer is down', error: true });
       } else {
@@ -33,8 +33,8 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
   for (let key in printOptions) {
     request.getOptionsMap().set(key, printOptions[key]);
   }
-  return new Promise(function(resolve, reject) {
-    client.printPage(request, function(err, response) {
+  return new Promise(function (resolve, reject) {
+    client.printPage(request, function (err, response) {
       if (err || response.getMessage() == 'error') {
         reject({ message: 'Failed to print', error: true });
       }
@@ -45,5 +45,4 @@ function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
     });
   });
 }
-
-module.exports = { sendPrintRequest, healthCheck };
+module.exports = { sendPrintRequest };
