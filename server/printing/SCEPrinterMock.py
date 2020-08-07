@@ -72,10 +72,6 @@ class SCEPrinterMock():
 
     def create_visual(self):
         self.visual_components()
-        # SURABHI PLEASE FIX
-        # import time
-        # time.sleep(20)
-
         curses.endwin()
         exit()
 
