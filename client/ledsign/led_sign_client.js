@@ -18,8 +18,8 @@ function healthCheck(officerName, signIp) {
   );
   const healthCheckRequest = messages.LedSignRequest();
   healthCheckRequest.setMessage(officerName);
-  return new Promise(function (resolve, reject) {
-    client.healthCheck(healthCheckRequest, function (err, response) {
+  return new Promise(function(resolve, reject) {
+    client.healthCheck(healthCheckRequest, function(err, response) {
       if (err || !response) {
         reject({ message: 'Sign is down', error: true });
       } else {
@@ -59,27 +59,10 @@ function updateSignText(signData, signIp) {
   textRequest.setBackgroundColor(signData.backgroundColor);
   textRequest.setTextColor(signData.textColor);
   textRequest.setBorderColor(signData.borderColor);
-  return new Promise(function (resolve, reject) {
-    client.updateSignText(textRequest, function (err, response) {
+  return new Promise(function(resolve, reject) {
+    client.updateSignText(textRequest, function(err, response) {
       if (err) reject({ message: 'Update failed', error: true });
       resolve({ message: response, error: false });
     });
   });
 }
-
-// module.exports = { healthCheck, updateSignText };
-
-function main(){
-  const signIp = 50052;
-  const testRequest = { 
-    text: 'i dont think this willwork', 
-    brightness: 100, 
-    scrollSpeed: 2, 
-    backgroundColor: 'baby blue', 
-    textColor: 'white', 
-    borderColor: 'yellow' 
-  }
-  updateSignText(testRequest, signIp);
-};
-
-main();
