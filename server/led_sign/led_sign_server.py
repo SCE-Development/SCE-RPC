@@ -32,6 +32,16 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
             "--set-font-filename",
             self.CURRENT_DIRECTORY + "fonts/9x18B.bdf",
         ]
+                self.CURRENT_DIRECTORY + "sce_sign.exe",
+                "--set-text", request.text,
+                "--set-brightness", str(request.brightness) + "%",
+                "--set-speed", str(request.scroll_speed) + " px/vsync",
+                "--set-background-color", request.background_color[1:],
+                "--set-font-color", request.text_color[1:],
+                "--set-border-color", request.border_color[1:],
+                "--set-font-filename", self.CURRENT_DIRECTORY +
+                "fonts/9x18B.bdf",
+            ]
         print(command)
         self.sign_data["text"] = request.text
         self.sign_data["brightness"] = request.brightness

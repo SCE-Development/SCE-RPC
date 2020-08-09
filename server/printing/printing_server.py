@@ -67,7 +67,7 @@ class PrintServicer(print_pb2_grpc.PrinterServicer):
     def HealthCheck(self, request, context):
         response = print_pb2.PrinterHealthStatus()
         response.message = "Hello from health-check!"
-        print("Here is the printer health status!")
+        print('Here is the printer health status!')
         return response
 
 
