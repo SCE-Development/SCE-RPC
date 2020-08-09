@@ -16,16 +16,22 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
 
     def WriteCommandToSign(self, request):
         command = [
-                self.CURRENT_DIRECTORY + "sce_sign.exe",
-                "--set-text", request.text,
-                "--set-brightness", str(request.brightness) + "%",
-                "--set-speed", str(request.scroll_speed) + " px/vsync",
-                "--set-background-color", request.background_color[1:],
-                "--set-font-color", request.text_color[1:],
-                "--set-border-color", request.border_color[1:],
-                "--set-font-filename", self.CURRENT_DIRECTORY +
-                "fonts/9x18B.bdf",
-            ]
+            self.CURRENT_DIRECTORY + "sce_sign.exe",
+            "--set-text",
+            request.text,
+            "--set-brightness",
+            str(request.brightness) + "%",
+            "--set-speed",
+            str(request.scroll_speed) + " px/vsync",
+            "--set-background-color",
+            request.background_color[1:],
+            "--set-font-color",
+            request.text_color[1:],
+            "--set-border-color",
+            request.border_color[1:],
+            "--set-font-filename",
+            self.CURRENT_DIRECTORY + "fonts/9x18B.bdf",
+        ]
         print(command)
         self.sign_data["text"] = request.text
         self.sign_data["brightness"] = request.brightness
@@ -41,9 +47,9 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
 
     def UpdateSignText(self, request, context):
         response = led_sign_pb2.LedSignMessage()
-        response.message = 'hello from pi'
+        response.message = "hello from pi"
         self.WriteCommandToSign(request)
-        print('we got something!')
+        print("we got something!")
         return response
 
     def HealthCheck(self, request, context):
@@ -57,19 +63,19 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
             response.border_color = self.sign_data["border-color"]
 
         response.message = "hello from pi"
-        print('we got something!')
+        print("we got something!")
         return response
 
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     led_sign_pb2_grpc.add_LedSignServicer_to_server(LedSignServicer(), server)
-    print('Starting server. Listening on port 50052.')
-    server.add_insecure_port('[::]:50052')
+    print("Starting server. Listening on port 50052.")
+    server.add_insecure_port("[::]:50052")
     server.start()
     server.wait_for_termination()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     logging.basicConfig()
     serve()
