@@ -19,7 +19,7 @@ function healthCheck() {
   });
 }
 
-function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
+function sendPrintRequest(raw, copies, sides, pageRanges, destination='') {
   printOptions = {
     'sides': sides,
     'page-ranges': pageRanges
