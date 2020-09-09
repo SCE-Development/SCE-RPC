@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const { healthCheck, updateSignText } = require('../ledsign/led_sign_client');
-const { sendPrintRequest } = require('../printing/print_client');
-const { send3dPrintRequest } = require('../printing_3d/print_3d_client');
 const {
   OK, BAD_REQUEST, NOT_FOUND, LED_SIGN_IP
 } = require('../config/config');

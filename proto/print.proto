@@ -1,9 +1,8 @@
 syntax = "proto3";
 
-
 service Printer {
     rpc PrintPage (PrintRequest) returns (PrintResponse);
-    rpc HealthCheck (HealthCheckUpRequest) returns (PrinterHealthStatus);
+    rpc HealthCheck (PrinterHealthCheckUpRequest) returns (PrinterHealthStatus);
 }
 
 message PrintRequest {
@@ -17,7 +16,7 @@ message PrintResponse {
     string message = 1;
 }
 
-message HealthCheckUpRequest {
+message PrinterHealthCheckUpRequest {
     string member_name = 1;
 }
 
