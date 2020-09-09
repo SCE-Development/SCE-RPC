@@ -4,17 +4,6 @@
 var grpc = require('grpc');
 var print_pb = require('./print_pb.js');
 
-function serialize_HealthCheckUpRequest(arg) {
-  if (!(arg instanceof print_pb.HealthCheckUpRequest)) {
-    throw new Error('Expected argument of type HealthCheckUpRequest');
-  }
-  return Buffer.from(arg.serializeBinary());
-}
-
-function deserialize_HealthCheckUpRequest(buffer_arg) {
-  return print_pb.HealthCheckUpRequest.deserializeBinary(new Uint8Array(buffer_arg));
-}
-
 function serialize_PrintRequest(arg) {
   if (!(arg instanceof print_pb.PrintRequest)) {
     throw new Error('Expected argument of type PrintRequest');
@@ -35,6 +24,17 @@ function serialize_PrintResponse(arg) {
 
 function deserialize_PrintResponse(buffer_arg) {
   return print_pb.PrintResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_PrinterHealthCheckUpRequest(arg) {
+  if (!(arg instanceof print_pb.PrinterHealthCheckUpRequest)) {
+    throw new Error('Expected argument of type PrinterHealthCheckUpRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_PrinterHealthCheckUpRequest(buffer_arg) {
+  return print_pb.PrinterHealthCheckUpRequest.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_PrinterHealthStatus(arg) {
@@ -65,10 +65,10 @@ var PrinterService = exports.PrinterService = {
     path: '/Printer/HealthCheck',
     requestStream: false,
     responseStream: false,
-    requestType: print_pb.HealthCheckUpRequest,
+    requestType: print_pb.PrinterHealthCheckUpRequest,
     responseType: print_pb.PrinterHealthStatus,
-    requestSerialize: serialize_HealthCheckUpRequest,
-    requestDeserialize: deserialize_HealthCheckUpRequest,
+    requestSerialize: serialize_PrinterHealthCheckUpRequest,
+    requestDeserialize: deserialize_PrinterHealthCheckUpRequest,
     responseSerialize: serialize_PrinterHealthStatus,
     responseDeserialize: deserialize_PrinterHealthStatus,
   },
