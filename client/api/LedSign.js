@@ -13,8 +13,9 @@ router.post('/LedSign/healthCheck', (req, res) => {
   const { officerName } = req.body;
   healthCheck(officerName, LED_SIGN_IP)
     .then(response => {
-      const { message } = response.messages;
-      const messageList = message.getMessagesList();
+      const { messages } = response;
+      const messageList =
+        messages.getMessagesList && messages.getMessagesList();
       return res.status(OK).send(
         messageList.map(msg => ({
           text: msg.getText(),
@@ -45,7 +46,7 @@ router.post('/LedSign/deleteMessageFromQueue', (req, res) => {
 });
 
 router.post('/LedSign/addMessageToQueue', async (req, res) => {
-  if (!await addSignLog(req.body)) {
+  if (!(await addSignLog(req.body))) {
     return res.sendStatus(BAD_REQUEST);
   }
   addMessageToQueue(req.body, LED_SIGN_IP)
@@ -57,7 +58,6 @@ router.post('/LedSign/addMessageToQueue', async (req, res) => {
       return res.status(NOT_FOUND).send({ ...error });
     });
 });
-
 
 router.post('/LedSign/clearMessageQueue', (req, res) => {
   clearMessageQueue(LED_SIGN_IP)
