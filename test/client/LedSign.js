@@ -130,11 +130,7 @@ describe('LedSign', () => {
         '/SceRpcApi/LedSign/healthCheck',
         officer
       );
-      // expect(response).to.have.status(OK);
       signResponse = response.body;
-    });
-    it('Should return the correct values when modified', done => {
-      healthCheckMock.resolves(SUCCESS_MESSAGE);
       if (signResponse) {
         signResponse.forEach(msg => {
           expect(msg.text).to.equal(VALID_SIGN_REQUEST.text);
@@ -147,7 +143,6 @@ describe('LedSign', () => {
           expect(msg.borderColor).to.equal(VALID_SIGN_REQUEST.borderColor);
         });
       }
-      done();
     });
     it('Should return statusCode 404 when the sign is down', async () => {
       healthCheckMock.resolves(false);
