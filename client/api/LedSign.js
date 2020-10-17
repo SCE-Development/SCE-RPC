@@ -14,8 +14,7 @@ router.post('/LedSign/healthCheck', (req, res) => {
   healthCheck(officerName, LED_SIGN_IP)
     .then(response => {
       const messages = response;
-      if(!messages)
-      {
+      if(!messages) {
         return res.sendStatus(NOT_FOUND);
       }
       return res.status(OK).send(

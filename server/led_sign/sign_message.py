@@ -9,4 +9,4 @@ class SignMessage:
         self.border_color = request.border_color
 
     def __str__(self):
-      return self.text
+        return self.text

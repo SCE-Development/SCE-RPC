@@ -27,31 +27,33 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
                 # This if statement checks whether or not the sign should be
                 # updated. If the queue has more than one message or if a
                 # message exists and the sign is blank, we should update.
-                if len(self.message_queue) != 1 or self.proc == None:
+                if len(self.message_queue) != 1 or self.proc is None:
                     current_msg = self.message_queue[index]
                     self.command = [
-                            self.CURRENT_DIRECTORY + "sce_sign.exe",
-                            "--set-text", current_msg.text,
-                            "--set-brightness", str(current_msg.brightness) + "%",
-                            "--set-speed", str(current_msg.scroll_speed) + " px/vsync",
-                            "--set-background-color", current_msg.background_color[1:],
-                            "--set-font-color", current_msg.text_color[1:],
-                            "--set-border-color", current_msg.border_color[1:],
-                            "--set-font-filename", self.CURRENT_DIRECTORY + 
-                            "fonts/9x18B.bdf",
-                        ]
+                        self.CURRENT_DIRECTORY + "sce_sign.exe",
+                        "--set-text", current_msg.text,
+                        "--set-brightness", str(current_msg.brightness) + "%",
+                        "--set-speed", str(current_msg.scroll_speed)
+                        + " px/vsync",
+                        "--set-background-color",
+                        current_msg.background_color[1:],
+                        "--set-font-color", current_msg.text_color[1:],
+                        "--set-border-color", current_msg.border_color[1:],
+                        "--set-font-filename", self.CURRENT_DIRECTORY +
+                        "fonts/9x18B.bdf",
+                    ]
                     print(self.command)
-                    
-                    if self.proc != None:
+
+                    if self.proc is not None:
                         self.proc.kill()
                     self.proc = subprocess.Popen(self.command)
-                index = (index+1)%len(self.message_queue)
+                index = (index + 1) % len(self.message_queue)
             else:
-                if self.proc != None:
+                if self.proc is not None:
                     self.proc.kill()
                 index = 0
             time.sleep(30)
-        
+
     def ClearMessageQueue(self):
         self.message_queue.clear()
         print(self.message_queue)
@@ -67,7 +69,7 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         print(self.message_queue)
         return response
 
-    def HealthCheck(self, request, context):  
+    def HealthCheck(self, request, context):
         records = []
         for msg in self.message_queue:
             led_sign_record = led_sign_pb2.LedSignRecord()
@@ -84,13 +86,15 @@ class LedSignServicer(led_sign_pb2_grpc.LedSignServicer):
         print(response)
         print('we got something!')
         return response
-    
+
     def DeleteMessageFromQueue(self, request, context):
         response = led_sign_pb2.LedSignMessage()
         response.message = 'deleted'
-        if self.command[2] == request.message and self.proc != None:
+        if self.command[2] == request.message and self.proc is not None:
             self.proc.kill()
-        self.message_queue = [elem for elem in self.message_queue if elem.text != request.message]
+        self.message_queue = [
+            elem for elem in self.message_queue if elem.text
+            != request.message]
         print('it has been deleted', self.message_queue)
         return response
 
@@ -105,6 +109,7 @@ def serve():
     server.add_insecure_port('[::]:50052')
     server.start()
     server.wait_for_termination()
+
 
 if __name__ == '__main__':
     logging.basicConfig()
