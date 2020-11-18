@@ -5,13 +5,15 @@ process.env.NODE_ENV = 'test';
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const constants = require('../../client/config/config');
-const { OK, BAD_REQUEST } = constants;
+const { OK, BAD_REQUEST, NOT_FOUND } = constants;
 const tools = require('../util/tools.js');
 const PrintFunctions =
   require('../../client/printing/print_client');
 const sinon = require('sinon');
+const SceApiTester = require('../util/SceApiTester');
 
 let app = null;
+let test = null;
 const expect = chai.expect;
 
 chai.should();
@@ -27,31 +29,37 @@ const TEXT_REQUEST = {
 };
 
 describe('2DPrinting', () => {
+  const healthCheckPrinterMock =
+    sinon.stub(PrintFunctions, 'healthCheck');
   const sendPrintRequestMock = sinon.stub(PrintFunctions, 'sendPrintRequest');
 
   before(done => {
     app = tools.initializeServer(__dirname + '/../../client/api/2DPrinting.js');
+    test = new SceApiTester(app);
     done();
   });
 
   after(done => {
+    healthCheckPrinterMock.restore();
     sendPrintRequestMock.restore();
     tools.terminateServer();
     done();
   });
 
   afterEach(() => {
+    healthCheckPrinterMock.reset();
     sendPrintRequestMock.reset();
   });
 
-  describe('/POST sendPrintRequest', () => {
-    it('Should return statuscode 200 when it prints', done => {
-      sendPrintRequestMock.resolves(SUCCESS_MESSAGE);
+  describe('/POST healthCheck', () => {
+    let printerHealthResponse = null;
+    it('Should return statusCode 200 when the printer is active', done => {
+      healthCheckPrinterMock.resolves(SUCCESS_MESSAGE);
       chai
         .request(app)
-        .post('/SceRpcApi/Printer/sendPrintRequest')
-        .send(TEXT_REQUEST)
+        .post('/SceRpcApi/Printer/healthCheck')
         .then(function(res) {
+          printerHealthResponse = res.body;
           expect(res).to.have.status(OK);
           done();
         })
@@ -59,18 +67,34 @@ describe('2DPrinting', () => {
           throw err;
         });
     });
-    it('Should return statuscode 400 when the RPC fails', done => {
-      sendPrintRequestMock.rejects(ERROR_MESSAGE);
+    it('Should return the statusCode 404 when the printer is down', done => {
+      healthCheckPrinterMock.rejects(false);
       chai
         .request(app)
-        .post('/SceRpcApi/Printer/sendPrintRequest')
+        .post('/SceRpcApi/Printer/healthCheck')
         .then(function(res) {
-          expect(res).to.have.status(BAD_REQUEST);
+          console.log(res.status);
+          expect(res).to.have.status(NOT_FOUND);
           done();
         })
         .catch(err => {
           throw err;
         });
+    });
+  });
+
+  describe('/POST sendPrintRequest', () => {
+    it('Should return statuscode 200 when it prints', async () => {
+      sendPrintRequestMock.resolves(SUCCESS_MESSAGE);
+      const result = await test.sendPostRequest(
+        '/SceRpcApi/Printer/sendPrintRequest', TEXT_REQUEST);
+      expect(result).to.have.status(OK);
+    });
+    it('Should return statuscode 400 when the RPC fails', async () => {
+      sendPrintRequestMock.rejects(ERROR_MESSAGE);
+      const result = await test.sendPostRequest(
+        '/SceRpcApi/Printer/sendPrintRequest', '');
+      expect(result).to.have.status(BAD_REQUEST);
     });
   });
 });
