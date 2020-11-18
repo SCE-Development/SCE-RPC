@@ -1,15 +1,17 @@
 import grpc
 import concurrent
 from concurrent import futures
-
+from ResumeGenerator import ResumeGenerator
 import resume_pb2
 import resume_pb2_grpc
-import resume_Py
+from decodeFile import decodeFile
 
 class ResumeServicer(resume_pb2_grpc.ResumeServicer):
+    generator = ResumeGenerator()
+    decoder = decodeFile()
     def GenerateResume(self, data):
         print('we got something!!')
-        generator = new ResumeGenerator()
+        decoder.decodeFile('./encodedFile.txt')
         resume = generator.generateResume(data)
         return resume
 
@@ -18,7 +20,6 @@ def main():
     resume_pb2_grpc.add_ResumeServicer_to_server(ResumeServicer(), server)
     print('Server Started. Listening on port 50051')
     server.add_insecure_port('[::]:50051')
-    generator = new ResumeGenerator()
     server.start()
     server.wait_for_termination()
 
