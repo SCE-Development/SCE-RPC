@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+service FaceImage { 
+    rpc RequestFaceCoordinate (FaceCoordinateRequest) returns (FaceCoordinateResponse);
+}
+
+message FaceCoordinateRequest {
+    bytes faceImage = 1;
+}
+
+message FaceCoordinateResponse {
+    message Face {
+        string name = 1;
+        double tlx = 2;
+        double tly = 3;
+        double brx = 4;
+        double bry = 5;
+    }
+    
+    repeated Face faces = 1;
+}
