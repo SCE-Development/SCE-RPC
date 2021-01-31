@@ -10,6 +10,8 @@ import boto3
 from PIL import Image
 from io import BytesIO
 
+import json
+
 class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
     def RequestFaceCoordinate(self, request, context):
         print('we got something')
@@ -17,19 +19,38 @@ class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
         stream = BytesIO(request.faceImage)
         image = Image.open(stream).convert("RGBA")
         stream.close()
-
-        # image.show()
-        # print("show image")
         
         imagesize = [image.size[0],image.size[1]]
 
-        bucket = "rkfaceimage"
-        region = "us-east-2"
+        print("Reading configs")
 
-        s3Client = boto3.client("s3", region)
+        with open("../../client/config/config.json") as f:
+            AWSKEY = json.load(f)['AWSRekognition']
+
+        bucket = AWSKEY['BUCKET']
+        region = AWSKEY['REGION']
+        accessid = AWSKEY['AWSACCESSKEYID']
+        secretkey = AWSKEY['AWSSECRETKEY']
+
+        print("Creating clients")
+
+        s3Client = boto3.client(
+            "s3",
+            aws_access_key_id=accessid,
+            aws_secret_access_key=secretkey,
+            region_name=region
+            )
+        rekognitionClient = boto3.client(
+            "rekognition",
+            aws_access_key_id=accessid,
+            aws_secret_access_key=secretkey,
+            region_name=region
+            )
+
+        print("Going to do stuff with client")
         imgnames = get_image_names(s3Client, bucket)
         print(imgnames)
-        faces = get_face_coordinates(request.faceImage, imgnames, bucket, region)
+        faces = get_face_coordinates(rekognitionClient, request.faceImage, imgnames, bucket, region)
         print(faces)
         for facename, faceBB in faces:
             face = response.faces.add()
@@ -39,9 +60,11 @@ class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
 
 
 def get_image_names(client, bucket):
+    # print("In image names")
     response = client.list_objects_v2(
         Bucket=bucket
     )
+    # print(response)
     contents = response['Contents']
     imgnames = [obj["Key"] for obj in contents]
     return imgnames
@@ -55,9 +78,7 @@ def get_bounding_box(name, bb, iz):
     return [name,lx,ly,rx,ry]
 
 
-def get_face_coordinates(target, source, bucket, region):
-    client = boto3.client('rekognition', region)
-
+def get_face_coordinates(client, target, source, bucket, region):
     cid = "faces"
     client.create_collection(
         CollectionId=cid
@@ -103,6 +124,21 @@ def get_face_coordinates(target, source, bucket, region):
 
 
 def main():
+    # with open("../../client/config/config.json") as f:
+    #     AWSKEY = json.load(f)['AWSRekognition']
+    # bucket = AWSKEY['BUCKET']
+    # region = AWSKEY['REGION']
+    # accessid = AWSKEY['AWSACCESSKEYID']
+    # secretkey = AWSKEY['AWSSECRETKEY']
+    # s3Client = boto3.client(
+    #     "s3",
+    #     aws_access_key_id=accessid,
+    #     aws_secret_access_key=secretkey,
+    #     region_name=region
+    #     )
+    # get_image_names(s3Client, bucket)
+
+
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     aws_rekognition_pb2_grpc.add_FaceImageServicer_to_server(FaceImageServicer(), server)
     print("server started")

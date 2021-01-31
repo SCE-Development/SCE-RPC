@@ -1,0 +1,8 @@
+{
+  "AWSRekognition": {
+    "AWSACCESSKEYID": "XXXXXXXXXXXXXXXX",
+    "AWSSECRETKEY": "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
+    "BUCKET": "officer-faces",
+    "REGION": "us-west-1"
+  }
+}
