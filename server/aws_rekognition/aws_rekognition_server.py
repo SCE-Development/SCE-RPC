@@ -55,6 +55,9 @@ class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
         for facename, faceBB in faces:
             face = response.faces.add()
             [face.name, face.tlx, face.tly, face.brx, face.bry] = get_bounding_box(facename, faceBB, imagesize)
+        response.width = image.size[0]
+        response.height = image.size[1]
+        print(response)
         print("sending back")
         return response
 

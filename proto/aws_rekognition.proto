@@ -16,6 +16,8 @@ message FaceCoordinateResponse {
         double brx = 4;
         double bry = 5;
     }
-    
+
     repeated Face faces = 1;
+    double width = 2;
+    double height = 3;
 }
