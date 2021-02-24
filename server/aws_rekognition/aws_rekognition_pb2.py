@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x15\x61ws_rekognition.proto\"*\n\x15\x46\x61\x63\x65\x43oordinateRequest\x12\x11\n\tfaceImage\x18\x01 \x01(\x0c\"\x8f\x01\n\x16\x46\x61\x63\x65\x43oordinateResponse\x12+\n\x05\x66\x61\x63\x65s\x18\x01 \x03(\x0b\x32\x1c.FaceCoordinateResponse.Face\x1aH\n\x04\x46\x61\x63\x65\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03tlx\x18\x02 \x01(\x01\x12\x0b\n\x03tly\x18\x03 \x01(\x01\x12\x0b\n\x03\x62rx\x18\x04 \x01(\x01\x12\x0b\n\x03\x62ry\x18\x05 \x01(\x01\x32U\n\tFaceImage\x12H\n\x15RequestFaceCoordinate\x12\x16.FaceCoordinateRequest\x1a\x17.FaceCoordinateResponseb\x06proto3'
+  serialized_pb=b'\n\x15\x61ws_rekognition.proto\"*\n\x15\x46\x61\x63\x65\x43oordinateRequest\x12\x11\n\tfaceImage\x18\x01 \x01(\x0c\"\xae\x01\n\x16\x46\x61\x63\x65\x43oordinateResponse\x12+\n\x05\x66\x61\x63\x65s\x18\x01 \x03(\x0b\x32\x1c.FaceCoordinateResponse.Face\x12\r\n\x05width\x18\x02 \x01(\x01\x12\x0e\n\x06height\x18\x03 \x01(\x01\x1aH\n\x04\x46\x61\x63\x65\x12\x0c\n\x04name\x18\x01 \x01(\t\x12\x0b\n\x03tlx\x18\x02 \x01(\x01\x12\x0b\n\x03tly\x18\x03 \x01(\x01\x12\x0b\n\x03\x62rx\x18\x04 \x01(\x01\x12\x0b\n\x03\x62ry\x18\x05 \x01(\x01\x32U\n\tFaceImage\x12H\n\x15RequestFaceCoordinate\x12\x16.FaceCoordinateRequest\x1a\x17.FaceCoordinateResponseb\x06proto3'
 )
 
 
@@ -112,8 +112,8 @@ _FACECOORDINATERESPONSE_FACE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=141,
-  serialized_end=213,
+  serialized_start=172,
+  serialized_end=244,
 )
 
 _FACECOORDINATERESPONSE = _descriptor.Descriptor(
@@ -131,6 +131,20 @@ _FACECOORDINATERESPONSE = _descriptor.Descriptor(
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='width', full_name='FaceCoordinateResponse.width', index=1,
+      number=2, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='height', full_name='FaceCoordinateResponse.height', index=2,
+      number=3, type=1, cpp_type=5, label=1,
+      has_default_value=False, default_value=float(0),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
   ],
   extensions=[
   ],
@@ -144,7 +158,7 @@ _FACECOORDINATERESPONSE = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=70,
-  serialized_end=213,
+  serialized_end=244,
 )
 
 _FACECOORDINATERESPONSE_FACE.containing_type = _FACECOORDINATERESPONSE
@@ -184,8 +198,8 @@ _FACEIMAGE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=215,
-  serialized_end=300,
+  serialized_start=246,
+  serialized_end=331,
   methods=[
   _descriptor.MethodDescriptor(
     name='RequestFaceCoordinate',

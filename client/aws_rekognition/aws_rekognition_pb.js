@@ -235,7 +235,9 @@ proto.FaceCoordinateResponse.prototype.toObject = function(opt_includeInstance) 
 proto.FaceCoordinateResponse.toObject = function(includeInstance, msg) {
   var f, obj = {
     facesList: jspb.Message.toObjectList(msg.getFacesList(),
-    proto.FaceCoordinateResponse.Face.toObject, includeInstance)
+    proto.FaceCoordinateResponse.Face.toObject, includeInstance),
+    width: +jspb.Message.getFieldWithDefault(msg, 2, 0.0),
+    height: +jspb.Message.getFieldWithDefault(msg, 3, 0.0)
   };
 
   if (includeInstance) {
@@ -277,6 +279,14 @@ proto.FaceCoordinateResponse.deserializeBinaryFromReader = function(msg, reader)
       reader.readMessage(value,proto.FaceCoordinateResponse.Face.deserializeBinaryFromReader);
       msg.addFaces(value);
       break;
+    case 2:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setWidth(value);
+      break;
+    case 3:
+      var value = /** @type {number} */ (reader.readDouble());
+      msg.setHeight(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -312,6 +322,20 @@ proto.FaceCoordinateResponse.serializeBinaryToWriter = function(message, writer)
       1,
       f,
       proto.FaceCoordinateResponse.Face.serializeBinaryToWriter
+    );
+  }
+  f = message.getWidth();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      2,
+      f
+    );
+  }
+  f = message.getHeight();
+  if (f !== 0.0) {
+    writer.writeDouble(
+      3,
+      f
     );
   }
 };
@@ -595,6 +619,36 @@ proto.FaceCoordinateResponse.prototype.addFaces = function(opt_value, opt_index)
 
 proto.FaceCoordinateResponse.prototype.clearFacesList = function() {
   this.setFacesList([]);
+};
+
+
+/**
+ * optional double width = 2;
+ * @return {number}
+ */
+proto.FaceCoordinateResponse.prototype.getWidth = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 2, 0.0));
+};
+
+
+/** @param {number} value */
+proto.FaceCoordinateResponse.prototype.setWidth = function(value) {
+  jspb.Message.setProto3FloatField(this, 2, value);
+};
+
+
+/**
+ * optional double height = 3;
+ * @return {number}
+ */
+proto.FaceCoordinateResponse.prototype.getHeight = function() {
+  return /** @type {number} */ (+jspb.Message.getFieldWithDefault(this, 3, 0.0));
+};
+
+
+/** @param {number} value */
+proto.FaceCoordinateResponse.prototype.setHeight = function(value) {
+  jspb.Message.setProto3FloatField(this, 3, value);
 };
 
 

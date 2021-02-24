@@ -27,6 +27,8 @@ class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
         with open("../../client/config/config.json") as f:
             AWSKEY = json.load(f)['AWSRekognition']
 
+        print("Loaded configs")
+
         bucket = AWSKEY['BUCKET']
         region = AWSKEY['REGION']
         accessid = AWSKEY['AWSACCESSKEYID']
@@ -57,7 +59,6 @@ class FaceImageServicer(aws_rekognition_pb2_grpc.FaceImageServicer):
             [face.name, face.tlx, face.tly, face.brx, face.bry] = get_bounding_box(facename, faceBB, imagesize)
         response.width = image.size[0]
         response.height = image.size[1]
-        print(response)
         print("sending back")
         return response
 
