@@ -17,8 +17,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   name='print.proto',
   package='',
   syntax='proto3',
-  serialized_options=None,
-  serialized_pb=b'\n\x0bprint.proto\"\xa6\x01\n\x0cPrintRequest\x12\x0e\n\x06\x63opies\x18\x01 \x01(\r\x12\x13\n\x0b\x64\x65stination\x18\x02 \x01(\t\x12+\n\x07options\x18\x03 \x03(\x0b\x32\x1a.PrintRequest.OptionsEntry\x12\x14\n\x0c\x65ncoded_file\x18\x04 \x01(\x0c\x1a.\n\x0cOptionsEntry\x12\x0b\n\x03key\x18\x01 \x01(\t\x12\r\n\x05value\x18\x02 \x01(\t:\x02\x38\x01\" \n\rPrintResponse\x12\x0f\n\x07message\x18\x01 \x01(\t\"2\n\x1bPrinterHealthCheckUpRequest\x12\x13\n\x0bmember_name\x18\x01 \x01(\t\"&\n\x13PrinterHealthStatus\x12\x0f\n\x07message\x18\x01 \x01(\t2x\n\x07Printer\x12*\n\tPrintPage\x12\r.PrintRequest\x1a\x0e.PrintResponse\x12\x41\n\x0bHealthCheck\x12\x1c.PrinterHealthCheckUpRequest\x1a\x14.PrinterHealthStatusb\x06proto3'
+  
 )
 
 
