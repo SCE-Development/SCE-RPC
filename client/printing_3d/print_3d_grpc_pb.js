@@ -12,7 +12,7 @@ function serialize_Print3dRequest(arg) {
 }
 
 function deserialize_Print3dRequest(buffer_arg) {
-  return print_3d_pb.Print3dRequest.deserializeBinary(new Uint8Array(buffer_arg));
+  return print_3d_pb.Print3dRequest.deserializeBinary(new Uint8Array(buffer_arg)
 }
 
 function serialize_Print3dResponse(arg) {
