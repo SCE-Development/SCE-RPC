@@ -1,11 +1,9 @@
 import grpc
 import logging
-import concurrent
 from concurrent import futures
 
 import print_3d_pb2
 import print_3d_pb2_grpc
-import subprocess
 import os
 from os import sep
 

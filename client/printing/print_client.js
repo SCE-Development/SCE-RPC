@@ -7,7 +7,7 @@ function healthCheck() {
   const client = new services.PrinterClient(
     'localhost:50051', grpc.credentials.createInsecure()
   );
-  const healthCheckRequest = new messages.PrintRequest();
+  const healthCheckRequest = new messages.PrinterHealthCheckUpRequest();
   return new Promise(function(resolve, reject) {
     client.healthCheck(healthCheckRequest, function(err, response) {
       if (err || !response) {
@@ -19,7 +19,7 @@ function healthCheck() {
   });
 }
 
-function sendPrintRequest(raw, copies, sides, pageRanges, destination) {
+function sendPrintRequest(raw, copies, sides, pageRanges, destination='') {
   printOptions = {
     'sides': sides,
     'page-ranges': pageRanges
