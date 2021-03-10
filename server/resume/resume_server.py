@@ -5,13 +5,16 @@ from ResumeGenerator import ResumeGenerator
 import resume_pb2
 import resume_pb2_grpc
 from decodeFile import decodeFile
+from encodeFile import encodeFile
 
 class ResumeServicer(resume_pb2_grpc.ResumeServicer):
     generator = ResumeGenerator()
     decoder = decodeFile()
+    encoder = encodeFile()
     def GenerateResume(self, data):
         print('we got something!!')
         decoder.decodeFile('./encodedFile.txt')
+        encoder.encodeFile('./Resume.pdf')
         resume = generator.generateResume(data)
         return resume
 
