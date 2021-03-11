@@ -6,8 +6,7 @@ var print_3d_pb = require('./print_3d_pb.js');
 
 function serialize_Print3dRequest(arg) {
   if (!(arg instanceof print_3d_pb.Print3dRequest)) {
-    throw new Error('Expected argument of type Print3dRequest');
-  }
+ 
   return Buffer.from(arg.serializeBinary());
 }
 
