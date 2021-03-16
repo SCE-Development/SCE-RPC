@@ -15,7 +15,6 @@ jobs:
         uses: actions/setup-node@v1
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
-          python-version: ${{ matrix.python-version }}
       - run: python3 -m pip install flake8
       - run: cp client/config/config.example.js client/config/config.js
       - run: npm install
