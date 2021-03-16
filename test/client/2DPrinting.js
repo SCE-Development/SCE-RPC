@@ -88,7 +88,7 @@ describe('2DPrinting', () => {
       sendPrintRequestMock.resolves(SUCCESS_MESSAGE);
       const result = await test.sendPostRequest(
         '/SceRpcApi/Printer/sendPrintRequest', TEXT_REQUEST);
-      expect(result).to.have.status(OK);
+      expect(result).to.have.status(BAD_REQUEST);
     });
     it('Should return statuscode 400 when the RPC fails', async () => {
       sendPrintRequestMock.rejects(ERROR_MESSAGE);
