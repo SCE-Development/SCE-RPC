@@ -1,0 +1,23 @@
+name: RPC Tests
+
+on: pull_request
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix: 
+       os: [ubuntu-latest]
+             
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+      - name: Set up Python
+        uses: actions/setup-python@v2
+      - run: python3 -m pip install flake8
+      - run: cp client/config/config.example.js client/config/config.js
+      - run: npm install
+      - run: npm run lint
+      - run: python3 -m flake8
+      - run: npm run test
