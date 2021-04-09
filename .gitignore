@@ -3,3 +3,4 @@ __pycache__/
 modules/
 node_modules
 config.js
+config.json

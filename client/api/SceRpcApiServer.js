@@ -29,14 +29,14 @@ class SceRpcApiServer {
       bodyParser.json({
         // support JSON-encoded request bodies
         limit: '50mb',
-        strict: true
+        strict: true,
       })
     );
     this.app.use(
       bodyParser.urlencoded({
         // support URL-encoded request bodies
         limit: '50mb',
-        extended: true
+        extended: true,
       })
     );
   }
@@ -64,7 +64,7 @@ class SceRpcApiServer {
   openConnection() {
     this.server = http.createServer(this.app);
     const { port } = this;
-    this.server.listen(port, function() {
+    this.server.listen(port, function () {
       console.debug(`Now listening on port ${port}`);
     });
   }
@@ -93,10 +93,10 @@ if (typeof module !== 'undefined' && !module.parent) {
   const apiRoutes = [
     __dirname + '/2DPrinting.js',
     __dirname + '/3DPrinting.js',
-    __dirname + '/LedSign.js'
+    __dirname + '/LedSign.js',
+    __dirname + '/AWSRekognition.js',
   ];
-  const server = new SceRpcApiServer(
-    apiRoutes, 8083, '/SceRpcApi/');
+  const server = new SceRpcApiServer(apiRoutes, 8083, '/SceRpcApi/');
   server.initializeEndpoints().then(() => {
     server.openConnection();
   });
