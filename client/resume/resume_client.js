@@ -13,10 +13,11 @@ function sendResumeRequest(raw) {
   request.setEncodedFile('./newFile.txt');
   return new Promise(function(resolve, reject) {
     client.generateResume(request, function(err, response) {
-      if (err || response.getMessage() == 'error') {
-        reject({ message: 'Failed to Generate Resume', error: true });
-        console.log("error", message);
-      }
+      if (err) reject({ message: 'Failed to Generate Resume', error: true });
+      // if (err || response.getMessage() == 'error') {
+      //   reject({ message: 'Failed to Generate Resume', error: true });
+      //   console.log("error", message);
+      // }
       resolve({
         message: response && response.getMessage(),
         error: false
