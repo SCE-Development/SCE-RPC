@@ -13,10 +13,10 @@ class ResumeServicer(resume_pb2_grpc.ResumeServicer):
     encoder = encodeFile()
     def GenerateResume(self, data):
         print('we got something!!')
-        decoder.decodeFile('./encodedFile.txt')
-        encoder.encodeFile('./Resume.pdf')
-        resume = generator.generateResume(data)
-        return resume
+        # decoder.decodeFile('./encodedFile.txt')
+        # encoder.encodeFile('./Resume.pdf')
+        # resume = generator.generateResume(data)
+        # return resume
 
 def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
