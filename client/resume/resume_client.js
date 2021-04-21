@@ -5,23 +5,23 @@ const contents = require('./resumeContents.json');
 const encodeFile = require('./encodeFile.js');
 
 function sendResumeRequest(raw) {
-  let client = new services.ResumeClient('localhost:50051',
+  const client = new services.ResumeClient('localhost:50051',
     grpc.credentials.createInsecure());
-  let request = new messages.ResumeRequest();
+  
+  const request = new messages.ResumeRequest();
   encode = new encodeFile();
   encode.convert('./resumeContents.json');
-  request.setEncodedFile('./newFile.txt');
-  return new Promise(function(resolve, reject) {
-    client.generateResume(request, function(err, response) {
-      if (err) reject({ message: 'Failed to Generate Resume', error: true });
-      // if (err || response.getMessage() == 'error') {
-      //   reject({ message: 'Failed to Generate Resume', error: true });
-      //   console.log("error", message);
-      // }
-      resolve({
-        message: response && response.getMessage(),
-        error: false
-      });
+  request.setEncodedFile('./encodedFile.txt');
+  return new Promise((resolve, reject) => {
+    console.log('we out here')
+    client.generateResume(request, (err, response) => {
+      if(err){
+        console.log('ohno')
+        reject({message: err, error:true});
+      }
+      else{
+        resolve({message: response, error: false});
+      }
     });
   });
 }

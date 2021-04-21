@@ -6,9 +6,10 @@ from decodeFile import decodeFile
 class ResumeGenerator():
     decoder = decodeFile()
     def generateResume(self, userInfoFile):
+        print('inside generate resume')
         userInfoFile = self.decoder.decode(userInfoFile)
-
-        #declare file, variable name f
+        print('decoded file')
+        # #declare file, variable name f
         with open('./decoded.json') as f:
             #loads the data in json format
             data = json.load(f)
@@ -91,5 +92,3 @@ class ResumeGenerator():
 
         return pdf
 
-generator = ResumeGenerator()
-generator.generateResume('./encodedFile.txt')
